@@ -1,0 +1,44 @@
+version: '3.1'
+services:
+  db:
+    image: mongo:latest
+    container_name: mongoose-jwt
+    command: mongod --port ${DB_PORT}
+    restart: always
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    environment:
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+  api:
+    image: node:14-alpine
+    container_name: api-jwt
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    build:
+      context: ./
+    volumes:
+      - './:/usr/src/app/'
+    working_dir: /usr/src/app/
+    env_file:
+        - .env
+    command: yarn start:docker
+  # api:
+  #   container_name: api-jwt
+  #   restart: always
+  #   depends_on:
+  #     - db
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - ${SERVER_PORT}:${SERVER_PORT}
+  #   volumes:
+  #     - './:/usr/src/app/'
+  #     - '/usr/src/app/node_modules'
+  #   working_dir: /usr/src/app/
+  #   env_file:
+  #       - .env
+  #   command: yarn start:docker
