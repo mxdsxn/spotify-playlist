@@ -1,6 +1,4 @@
 import axios from 'axios'
-import Buffer from 'buffer'
-import { urlencoded } from 'express'
 
 const { CLIENT_ID, CLIENT_SECRET } = process.env
 const REDIRECT_URI = 'http://localhost:1111/response-spotify/'
@@ -19,10 +17,10 @@ const getAppAuthorizationUrl = () => {
   return query_login
 }
 
-const getAppAuthenticationnUrl = async () => {
+const getAppAuthenticationUrl = async (codeAuthorization: string) => {
   const bodyParams = {
     grant_type: 'client_credentials',
-    code: 'AQD25WzlX2ozKi_Yv1-blb6MZrVQu7omeGR5w_xQErYN5GLJumFS1YIbT0KhBUBJAzK95AkB3hzKbzQwRe0HKPzxa2VrtNVwmT6cnGKScvO884Pd0_GDUvyl-AVzOCA6raEpGFyNlxu-aAhYijkdl8F7f1Nsowsz4c6DtWeVe1WovC5GJSPwRRAndQ',
+    code: codeAuthorization,
     redirect_uri: REDIRECT_URI,
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET,
@@ -33,19 +31,16 @@ const getAppAuthenticationnUrl = async () => {
   let result: any
   try {
     result = await axios.post(url_token, null, { params: bodyParams, })
-
-    console.log('ok', result.data)
+    return result.data
 
   } catch (error) {
-    console.log('erro', error)
+    result = { error: error, message: 'Falha ao obter token.' }
+    return result
 
   }
-
-
-  return result.data
 }
 
 export default {
   getAppAuthorizationUrl,
-  getAppAuthenticationnUrl
+  getAppAuthenticationUrl
 }
