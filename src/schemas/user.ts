@@ -9,6 +9,7 @@ export interface IUser extends mongoose.Document {
   password: String,
   passwordResetCode: String,
   passwordResetExpires: String,
+  spotifyToken: String
   createdAt: Date,
 }
 
@@ -32,6 +33,10 @@ const UserSchema = new mongoConnection.Schema({
     select: false,
   },
   passwordResetExpires: {
+    type: String,
+    select: false,
+  },
+  spotifyToken: {
     type: String,
     select: false,
   },
