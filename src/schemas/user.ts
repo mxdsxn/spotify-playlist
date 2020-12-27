@@ -4,12 +4,12 @@ import mongoose from 'mongoose'
 import mongoConnection from '../database'
 
 export interface IUser extends mongoose.Document {
-  name: String,
-  email: String,
-  password: String,
-  passwordResetCode: String,
-  passwordResetExpires: String,
-  spotifyToken: String
+  name: string,
+  email: string,
+  password: string,
+  passwordResetCode: string,
+  passwordResetExpires: string,
+  spotifyToken: string
   createdAt: Date,
 }
 

@@ -1,4 +1,3 @@
-import mongoConnection from "src/database";
 import User, { IUser } from "src/schemas/user";
 
 const registerUser = async (newUserData: IUser) => {
@@ -19,7 +18,7 @@ const registerUser = async (newUserData: IUser) => {
 
     const result = {
       message: 'Registrado com sucesso.',
-      resources: newUser
+      resources: { user: newUser }
     }
     return result
 
