@@ -1,13 +1,17 @@
-import express, { NextFunction, Request, Response, ErrorRequestHandler } from 'express'
+import express from 'express'
 
-import authRouter from './use-cases/auth'
-import spotifyConnectionRouter from './spotify-connection/routes'
+import {
+  authRouter,
+  spotifyConnectionRouter,
+} from '@useCases'
 
 const server = express()
 
-server.use(express.json())
+server.use(express.json(),)
 
-server.use(authRouter)
-server.use(spotifyConnectionRouter)
+server.use(
+  authRouter,
+  spotifyConnectionRouter,
+)
 
 export default server

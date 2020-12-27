@@ -22,11 +22,17 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@services": [
-        "./src/services/"
+      "@useCases": [
+        "./src/use-cases"
       ],
-      "@controllers": [
-        "./src/controllers"
+      "@token": [
+        "./src/common/token"
+      ],
+      "@schemas": [
+        "./src/schemas"
+      ],
+      "@interfaces": [
+        "./src/schemas/interfaces.ts"
       ],
     }
   },

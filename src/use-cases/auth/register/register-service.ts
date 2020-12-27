@@ -1,31 +1,42 @@
-import User, { IUser } from "src/schemas/user";
+import {
+  userSchema, 
+} from '@schemas'
+import {
+  IUser, 
+} from '@interfaces'
 
-const registerUser = async (newUserData: IUser) => {
+const registerUser = async (newUserData: IUser,) => {
 
   try {
-    const checkExistUser = await User.exists({ email: newUserData.email })
+    const checkExistUser = await userSchema.exists({
+        email: newUserData.email, 
+    },)
 
     if (checkExistUser) {
       const result = {
-        message: 'Email já registrado.',
-        resources: null,
+          message: 'Email já registrado.',
+          resources: null,
       }
       return result
     }
 
-    const newUser = await User.create(newUserData)
-    newUser.set({ password: undefined })
+    const newUser = await userSchema.create(newUserData,)
+    newUser.set({
+        password: undefined, 
+    },)
 
     const result = {
-      message: 'Registrado com sucesso.',
-      resources: { user: newUser }
+        message: 'Registrado com sucesso.',
+        resources: {
+            user: newUser, 
+        },
     }
     return result
 
   } catch (error) {
     const result = {
-      message: 'Erro ao cadastrar novo usuário',
-      resources: null,
+        message: 'Erro ao cadastrar novo usuário',
+        resources: null,
     }
     return result
   }

@@ -1,1 +1,3 @@
-export { default as registerRoute } from './register-route'
+export {
+  default as registerRoute, 
+} from './register-route'
