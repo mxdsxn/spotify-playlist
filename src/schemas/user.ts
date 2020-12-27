@@ -48,7 +48,7 @@ const UserSchema = new mongoConnection.Schema({
 
 UserSchema.pre('save', async function (next) {
   const passwordDecripted = this.get('password')
-  const passwordEncripted = bcrypt.hash(passwordDecripted, 11)
+  const passwordEncripted = await bcrypt.hash(passwordDecripted, 11)
   this.set({ password: passwordEncripted })
   next()
 })
