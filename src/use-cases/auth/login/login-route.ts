@@ -3,7 +3,7 @@ import loginUser from './login-service'
 
 const registerRoute = express.Router()
 
-registerRoute.post('/register', async (req, res,) => {
+registerRoute.post('/login', async (req, res,) => {
   try {
     const result = await loginUser(req.body)
 
