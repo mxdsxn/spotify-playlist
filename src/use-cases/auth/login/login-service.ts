@@ -27,7 +27,6 @@ const loginUser = async (userToAuthenticate: IUser) => {
     }
 
     const token = await setToken(user.get('id'))
-    console.log({ token })
 
     const result = {
       message: 'Usuário autenticado.',

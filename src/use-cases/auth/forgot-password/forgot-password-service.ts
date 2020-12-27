@@ -9,31 +9,31 @@ const forgotPassword = async (newUserData: IUser) => {
 
     if (!checkExistUser) {
       const result = {
-        message: 'Email não registrado.',
+        message: 'Usuário não encontrado.',
         resources: null,
       }
       return result
     }
 
-    const codeForgot = crypto.randomBytes(20).toString('hex')
+    const resetCode = crypto.randomBytes(20).toString('hex')
 
     const now = new Date()
     now.setHours(now.getHours() + 1)
 
-    await User.findByIdAndUpdate(checkExistUser.get('id'), checkExistUser.set({
-      passwordResetExpires: now.getTime(),
-      passwordResetToken: codeForgot,
-    }))
+    await User.findByIdAndUpdate(checkExistUser.get('id'), {
+      passwordResetExpires: now.getTime().toString(),
+      passwordResetCode: resetCode,
+    })
 
     const result = {
       message: 'Codigo para reset de senha gerado com sucesso.',
-      resources: { user: codeForgot }
+      resources: { resetCode }
     }
     return result
 
   } catch (error) {
     const result = {
-      message: 'Erro ao encontrar resetar senha do usuário',
+      message: 'Erro ao gerar codigo para reset senha do usuário',
       resources: null,
     }
     return result
