@@ -10,13 +10,13 @@ const resetPassword = async (newUserData: resetPasswordInterface,) => {
 
   try {
     const checkExistUser = await userSchema.findOne({
-        email: newUserData.email, 
+      email: newUserData.email, 
     },).select('+passwordResetExpires passwordResetCode',)
 
     if (!checkExistUser) {
       const result = {
-          message: 'Usuário não encontrado.',
-          resources: null,
+        message: 'Usuário não encontrado.',
+        resources: null,
       }
       return result
     }
@@ -26,39 +26,39 @@ const resetPassword = async (newUserData: resetPasswordInterface,) => {
 
     if (userResetCode !== newUserData.resetCode) {
       const result = {
-          message: 'Codigo inválido.',
-          resources: null,
+        message: 'Codigo inválido.',
+        resources: null,
       }
       return result
     } else if (userResetCodeExpire < new Date().getTime()) {
       const result = {
-          message: 'Codigo expirado.',
-          resources: null,
+        message: 'Codigo expirado.',
+        resources: null,
       }
       return result
     }
 
     checkExistUser.set({
-        password: newUserData.newPassword,
-        passwordResetExpires: undefined,
-        passwordResetCode: undefined,
+      password: newUserData.newPassword,
+      passwordResetExpires: undefined,
+      passwordResetCode: undefined,
     },)
 
     await checkExistUser.save()
 
     const result = {
-        message: 'Senha alterada com sucesso.',
-        resources: {
-            resetPassword: 'Ok',
-            checkExistUser, 
-        },
+      message: 'Senha alterada com sucesso.',
+      resources: {
+        resetPassword: 'Ok',
+        checkExistUser, 
+      },
     }
     return result
 
   } catch (error) {
     const result = {
-        message: 'Erro ao encontrar resetar senha do usuário',
-        resources: null,
+      message: 'Erro ao encontrar resetar senha do usuário',
+      resources: null,
     }
     return result
   }

@@ -11,21 +11,21 @@ spotifyConnectionRouter.get('/authorization-code', async (req, res,) => {
 
   }
   return res.status(400,).json({
-      result, 
+    result, 
   },)
 
 },)
 
 spotifyConnectionRouter.get('/response-spotify', async (req, res,) => {
   const {
-      query, 
+    query, 
   } = req
   if (query.code) {
     return res.redirect(200, '/authentication-token',)
 
   } else if (query.error) {
     return res.status(400,).json({
-        error: query.error, 
+      error: query.error, 
     },)
 
   }

@@ -12,13 +12,13 @@ const loginUser = async (userToAuthenticate: IUser,) => {
 
   try {
     const user = await userSchema.findOne({
-        email: userToAuthenticate.email, 
+      email: userToAuthenticate.email, 
     },).select('+password',)
 
     if (!user) {
       const result = {
-          message: 'Usuário não encontrado.',
-          resources: null,
+        message: 'Usuário não encontrado.',
+        resources: null,
       }
       return result
     }
@@ -27,8 +27,8 @@ const loginUser = async (userToAuthenticate: IUser,) => {
 
     if (!isValidPassword) {
       const result = {
-          message: 'Senha inválida.',
-          resources: null,
+        message: 'Senha inválida.',
+        resources: null,
       }
       return result
     }
@@ -36,17 +36,17 @@ const loginUser = async (userToAuthenticate: IUser,) => {
     const token = await setToken(user.get('id',),)
 
     const result = {
-        message: 'Usuário autenticado.',
-        resources: {
-            token, 
-        },
+      message: 'Usuário autenticado.',
+      resources: {
+        token, 
+      },
     }
     return result
 
   } catch (error) {
     const result = {
-        message: 'Erro ao autenticar o usuário',
-        resources: null,
+      message: 'Erro ao autenticar o usuário',
+      resources: null,
     }
     return result
   }

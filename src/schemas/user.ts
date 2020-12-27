@@ -14,36 +14,36 @@ export interface IUser extends mongoose.Document {
 }
 
 const UserSchema = new mongoConnection.Schema({
-    name: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: true,
-        select: false,
-    },
-    passwordResetCode: {
-        type: String,
-        select: false,
-    },
-    passwordResetExpires: {
-        type: String,
-        select: false,
-    },
-    spotifyToken: {
-        type: String,
-        select: false,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now(),
-    },
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+    select: false,
+  },
+  passwordResetCode: {
+    type: String,
+    select: false,
+  },
+  passwordResetExpires: {
+    type: String,
+    select: false,
+  },
+  spotifyToken: {
+    type: String,
+    select: false,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
 },)
 
 UserSchema.pre('save', async function (next,) {
@@ -51,7 +51,7 @@ UserSchema.pre('save', async function (next,) {
   const passwordEncripted = await bcrypt.hash(passwordDecripted, 11,)
 
   this.set({
-      password: passwordEncripted, 
+    password: passwordEncripted, 
   },)
   next()
 },)

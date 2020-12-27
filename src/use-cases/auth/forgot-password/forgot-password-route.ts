@@ -15,8 +15,8 @@ forgotPasswordRoute.post('/forgot_password', async (req, res,) => {
     return res
       .status(400,)
       .json({
-          message: 'Erro em /forgot_password.',
-          error,
+        message: 'Erro em /forgot_password.',
+        error,
       },)
   }
 },)

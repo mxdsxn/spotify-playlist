@@ -15,8 +15,8 @@ registerRoute.post('/login', async (req, res,) => {
     return res
       .status(400,)
       .json({
-          message: 'Erro em /login.',
-          error,
+        message: 'Erro em /login.',
+        error,
       },)
   }
 },)

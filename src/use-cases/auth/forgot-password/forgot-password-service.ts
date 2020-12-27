@@ -11,13 +11,13 @@ const forgotPassword = async (newUserData: IUser,) => {
 
   try {
     const checkExistUser = await userSchema.findOne({
-        email: newUserData.email, 
+      email: newUserData.email, 
     },)
 
     if (!checkExistUser) {
       const result = {
-          message: 'Usuário não encontrado.',
-          resources: null,
+        message: 'Usuário não encontrado.',
+        resources: null,
       }
       return result
     }
@@ -28,22 +28,22 @@ const forgotPassword = async (newUserData: IUser,) => {
     now.setHours(now.getHours() + 1,)
 
     await userSchema.findByIdAndUpdate(checkExistUser.get('id',), {
-        passwordResetExpires: now.getTime().toString(),
-        passwordResetCode: resetCode,
+      passwordResetExpires: now.getTime().toString(),
+      passwordResetCode: resetCode,
     },)
 
     const result = {
-        message: 'Codigo para reset de senha gerado com sucesso.',
-        resources: {
-            resetCode, 
-        },
+      message: 'Codigo para reset de senha gerado com sucesso.',
+      resources: {
+        resetCode, 
+      },
     }
     return result
 
   } catch (error) {
     const result = {
-        message: 'Erro ao gerar codigo para reset senha do usuário',
-        resources: null,
+      message: 'Erro ao gerar codigo para reset senha do usuário',
+      resources: null,
     }
     return result
   }
