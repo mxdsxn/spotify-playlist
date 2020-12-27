@@ -10,7 +10,7 @@ interface resetPasswordInterface {
 const resetPassword = async (newUserData: resetPasswordInterface) => {
 
   try {
-    const checkExistUser = await User.findOne({ email: newUserData.email }).select('+password passwordResetExpires passwordResetCode')
+    const checkExistUser = await User.findOne({ email: newUserData.email }).select('+passwordResetExpires passwordResetCode')
 
     if (!checkExistUser) {
       const result = {
