@@ -8,12 +8,12 @@ import {
   IUser, 
 } from '@interfaces'
 
-const loginUser = async (userToAuthenticate: IUser,) => {
+const loginUser = async (userToAuthenticate: IUser) => {
 
   try {
     const user = await userSchema.findOne({
       email: userToAuthenticate.email, 
-    },).select('+password',)
+    }).select('+password')
 
     if (!user) {
       const result = {
@@ -23,7 +23,7 @@ const loginUser = async (userToAuthenticate: IUser,) => {
       return result
     }
 
-    const isValidPassword = await bcrypt.compare(userToAuthenticate.password, user.password,)
+    const isValidPassword = await bcrypt.compare(userToAuthenticate.password, user.password)
 
     if (!isValidPassword) {
       const result = {
@@ -33,7 +33,7 @@ const loginUser = async (userToAuthenticate: IUser,) => {
       return result
     }
 
-    const token = await setToken(user.get('id',),)
+    const token = await setToken(user.get('id'))
 
     const result = {
       message: 'Usuário autenticado.',

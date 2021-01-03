@@ -15,8 +15,8 @@ const TrackSchema = new mongoConnection.Schema({
     type: String,
     required: true,
   },
-},)
+})
 
-const Track = mongoConnection.model<ITrack>('Track', TrackSchema,)
+const Track = mongoConnection.model<ITrack>('Track', TrackSchema)
 
 export default Track

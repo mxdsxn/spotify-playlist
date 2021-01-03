@@ -19,10 +19,10 @@ const PlaylistSchema = new mongoConnection.Schema({
     type: String,
     required: false,
   },
-  tracks: [ {
+  tracks: [{
     type: mongoConnection.Schema.Types.ObjectId,
     ref: 'Track',
-  }, ],
+  }],
   isPrivate: {
     type: Boolean,
     required: true,
@@ -31,8 +31,8 @@ const PlaylistSchema = new mongoConnection.Schema({
     type: mongoConnection.Schema.Types.ObjectId,
     ref: 'User',
   },
-},)
+})
 
-const Playlist = mongoConnection.model<IPlaylist>('Playlist', PlaylistSchema,)
+const Playlist = mongoConnection.model<IPlaylist>('Playlist', PlaylistSchema)
 
 export default Playlist

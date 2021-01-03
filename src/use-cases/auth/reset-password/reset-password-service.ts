@@ -6,12 +6,12 @@ interface resetPasswordInterface {
   resetCode: string,
   newPassword: string,
 }
-const resetPassword = async (newUserData: resetPasswordInterface,) => {
+const resetPassword = async (newUserData: resetPasswordInterface) => {
 
   try {
     const checkExistUser = await userSchema.findOne({
       email: newUserData.email, 
-    },).select('+passwordResetExpires passwordResetCode',)
+    }).select('+passwordResetExpires passwordResetCode')
 
     if (!checkExistUser) {
       const result = {
@@ -21,8 +21,8 @@ const resetPassword = async (newUserData: resetPasswordInterface,) => {
       return result
     }
 
-    const userResetCode = checkExistUser.get('passwordResetCode',)
-    const userResetCodeExpire = checkExistUser.get('passwordResetExpires',)
+    const userResetCode = checkExistUser.get('passwordResetCode')
+    const userResetCodeExpire = checkExistUser.get('passwordResetExpires')
 
     if (userResetCode !== newUserData.resetCode) {
       const result = {
@@ -42,7 +42,7 @@ const resetPassword = async (newUserData: resetPasswordInterface,) => {
       password: newUserData.newPassword,
       passwordResetExpires: undefined,
       passwordResetCode: undefined,
-    },)
+    })
 
     await checkExistUser.save()
 

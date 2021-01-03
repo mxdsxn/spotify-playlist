@@ -44,18 +44,18 @@ const UserSchema = new mongoConnection.Schema({
     type: Date,
     default: Date.now(),
   },
-},)
+})
 
-UserSchema.pre('save', async function (next,) {
-  const passwordDecripted = this.get('password',)
-  const passwordEncripted = await bcrypt.hash(passwordDecripted, 11,)
+UserSchema.pre('save', async function (next) {
+  const passwordDecripted = this.get('password')
+  const passwordEncripted = await bcrypt.hash(passwordDecripted, 11)
 
   this.set({
     password: passwordEncripted, 
-  },)
+  })
   next()
-},)
+})
 
-const User = mongoConnection.model<IUser>('User', UserSchema,)
+const User = mongoConnection.model<IUser>('User', UserSchema)
 
 export default User

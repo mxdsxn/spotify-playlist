@@ -7,12 +7,12 @@ import {
   IUser, 
 } from '@interfaces'
 
-const forgotPassword = async (newUserData: IUser,) => {
+const forgotPassword = async (newUserData: IUser) => {
 
   try {
     const checkExistUser = await userSchema.findOne({
       email: newUserData.email, 
-    },)
+    })
 
     if (!checkExistUser) {
       const result = {
@@ -22,15 +22,15 @@ const forgotPassword = async (newUserData: IUser,) => {
       return result
     }
 
-    const resetCode = crypto.randomBytes(20,).toString('hex',)
+    const resetCode = crypto.randomBytes(20).toString('hex')
 
     const now = new Date()
-    now.setHours(now.getHours() + 1,)
+    now.setHours(now.getHours() + 1)
 
-    await userSchema.findByIdAndUpdate(checkExistUser.get('id',), {
+    await userSchema.findByIdAndUpdate(checkExistUser.get('id'), {
       passwordResetExpires: now.getTime().toString(),
       passwordResetCode: resetCode,
-    },)
+    })
 
     const result = {
       message: 'Codigo para reset de senha gerado com sucesso.',

@@ -5,12 +5,12 @@ import {
   IUser, 
 } from '@interfaces'
 
-const registerUser = async (newUserData: IUser,) => {
+const registerUser = async (newUserData: IUser) => {
 
   try {
     const checkExistUser = await userSchema.exists({
       email: newUserData.email, 
-    },)
+    })
 
     if (checkExistUser) {
       const result = {
@@ -20,10 +20,10 @@ const registerUser = async (newUserData: IUser,) => {
       return result
     }
 
-    const newUser = await userSchema.create(newUserData,)
+    const newUser = await userSchema.create(newUserData)
     newUser.set({
       password: undefined, 
-    },)
+    })
 
     const result = {
       message: 'Registrado com sucesso.',

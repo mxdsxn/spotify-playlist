@@ -7,7 +7,7 @@ mongoConnection.connect('mongodb://localhost/spotilist', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
-},)
+})
 
 mongoConnection.Promise = global.Promise
 

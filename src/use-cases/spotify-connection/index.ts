@@ -13,13 +13,13 @@ const getAppAuthorizationUrl = () => {
   const query_login = 'https://accounts.spotify.com/authorize' +
     '?response_type=code' +
     '&client_id=' + CLIENT_ID +
-    '&redirect_uri=' + encodeURIComponent(REDIRECT_URI,) +
-    '&scopes=' + encodeURIComponent(queryParams.scopes,)
+    '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
+    '&scopes=' + encodeURIComponent(queryParams.scopes)
 
   return query_login
 }
 
-const getAppAuthenticationUrl = async (codeAuthorization: string,) => {
+const getAppAuthenticationUrl = async (codeAuthorization: string) => {
   const bodyParams = {
     grant_type: 'client_credentials',
     code: codeAuthorization,
@@ -34,7 +34,7 @@ const getAppAuthenticationUrl = async (codeAuthorization: string,) => {
   try {
     result = await axios.post(url_token, null, {
       params: bodyParams,
-    },)
+    })
     return result.data
 
   } catch (error) {
