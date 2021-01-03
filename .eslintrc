@@ -89,7 +89,7 @@
     "object-property-newline": [
       "error",
       {
-        "allowAllPropertiesOnSameLine": false,
+        "allowAllPropertiesOnSameLine": false
       }
     ],
     "no-multiple-empty-lines": [
@@ -112,7 +112,7 @@
     ],
     "array-bracket-spacing": [
       "error",
-      "always"
+      "never"
     ],
     "semi": [
       "error",
@@ -120,7 +120,7 @@
     ],
     "comma-dangle": [
       "error",
-      "always"
+      "always-multiline"
     ]
   }
 }
