@@ -9,9 +9,7 @@ const setToken = async (id: string) => {
   const secondsToExpire = 60
   const millesecondsToExpire = 1000 * secondsToExpire * minutesToExpire * hoursToExpire * daysToExpire
 
-  return jwt.sign({
-    id, 
-  }, secretString, {
+  return jwt.sign({ id }, secretString, {
     expiresIn: millesecondsToExpire,
     algorithm: 'HS256',
   })

@@ -50,9 +50,7 @@ UserSchema.pre('save', async function (next) {
   const passwordDecripted = this.get('password')
   const passwordEncripted = await bcrypt.hash(passwordDecripted, 11)
 
-  this.set({
-    password: passwordEncripted, 
-  })
+  this.set({ password: passwordEncripted })
   next()
 })
 

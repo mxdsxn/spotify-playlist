@@ -1,3 +1,1 @@
-export {
-  default as forgotPasswordRoute, 
-} from './forgot-password-route'
+export { default as forgotPasswordRoute } from './forgot-password-route'

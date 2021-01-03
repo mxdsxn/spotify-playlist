@@ -6,9 +6,7 @@ const {
 const REDIRECT_URI = 'http://localhost:1111/response-spotify/'
 
 const getAppAuthorizationUrl = () => {
-  const queryParams = {
-    scopes: 'user-read-private user-read-email',
-  }
+  const queryParams = { scopes: 'user-read-private user-read-email' }
 
   const query_login = 'https://accounts.spotify.com/authorize' +
     '?response_type=code' +
@@ -32,9 +30,7 @@ const getAppAuthenticationUrl = async (codeAuthorization: string) => {
 
   let result: any
   try {
-    result = await axios.post(url_token, null, {
-      params: bodyParams,
-    })
+    result = await axios.post(url_token, null, { params: bodyParams })
     return result.data
 
   } catch (error) {

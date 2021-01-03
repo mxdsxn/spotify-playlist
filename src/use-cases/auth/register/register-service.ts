@@ -1,16 +1,10 @@
-import {
-  userSchema, 
-} from '@schemas'
-import {
-  IUser, 
-} from '@interfaces'
+import { userSchema } from '@schemas'
+import { IUser } from '@interfaces'
 
 const registerUser = async (newUserData: IUser) => {
 
   try {
-    const checkExistUser = await userSchema.exists({
-      email: newUserData.email, 
-    })
+    const checkExistUser = await userSchema.exists({ email: newUserData.email })
 
     if (checkExistUser) {
       const result = {
@@ -21,15 +15,11 @@ const registerUser = async (newUserData: IUser) => {
     }
 
     const newUser = await userSchema.create(newUserData)
-    newUser.set({
-      password: undefined, 
-    })
+    newUser.set({ password: undefined })
 
     const result = {
       message: 'Registrado com sucesso.',
-      resources: {
-        user: newUser, 
-      },
+      resources: { user: newUser },
     }
     return result
 

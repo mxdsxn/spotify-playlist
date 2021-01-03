@@ -1,19 +1,13 @@
 import bcrypt from 'bcryptjs'
 
 import setToken from '@token'
-import {
-  userSchema, 
-} from '@schemas'
-import {
-  IUser, 
-} from '@interfaces'
+import { userSchema } from '@schemas'
+import { IUser } from '@interfaces'
 
 const loginUser = async (userToAuthenticate: IUser) => {
 
   try {
-    const user = await userSchema.findOne({
-      email: userToAuthenticate.email, 
-    }).select('+password')
+    const user = await userSchema.findOne({ email: userToAuthenticate.email }).select('+password')
 
     if (!user) {
       const result = {
@@ -37,9 +31,7 @@ const loginUser = async (userToAuthenticate: IUser) => {
 
     const result = {
       message: 'Usuário autenticado.',
-      resources: {
-        token, 
-      },
+      resources: { token },
     }
     return result
 

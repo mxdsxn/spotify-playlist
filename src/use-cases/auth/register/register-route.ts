@@ -1,9 +1,7 @@
 import express, {
-  Request, Response, 
+  Request, Response,
 } from 'express'
-import {
-  checkSchema, 
-} from 'express-validator'
+import { checkSchema } from 'express-validator'
 import registerUser from './register-service'
 
 const validatorRoute = checkSchema({

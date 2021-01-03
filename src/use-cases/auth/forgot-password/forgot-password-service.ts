@@ -1,18 +1,12 @@
 import crypto from 'crypto'
 
-import {
-  userSchema, 
-} from '@schemas'
-import {
-  IUser, 
-} from '@interfaces'
+import { userSchema } from '@schemas'
+import { IUser } from '@interfaces'
 
 const forgotPassword = async (newUserData: IUser) => {
 
   try {
-    const checkExistUser = await userSchema.findOne({
-      email: newUserData.email, 
-    })
+    const checkExistUser = await userSchema.findOne({ email: newUserData.email })
 
     if (!checkExistUser) {
       const result = {
@@ -34,9 +28,7 @@ const forgotPassword = async (newUserData: IUser) => {
 
     const result = {
       message: 'Codigo para reset de senha gerado com sucesso.',
-      resources: {
-        resetCode, 
-      },
+      resources: { resetCode },
     }
     return result
 
