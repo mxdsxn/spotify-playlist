@@ -1,9 +1,29 @@
 import express from 'express'
+
+import {
+  checkSchema,
+  validationResult,
+} from 'express-validator'
+
 import loginUser from './login-service'
 
-const registerRoute = express.Router()
+const validatorRoute = checkSchema({
+  email: {
+    in: ['body'],
+    isEmail: true,
+    notEmpty: true,
+  },
+  password: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true,
+  },
+})
 
-registerRoute.post('/login', async (req, res) => {
+const loginRoute = express.Router()
+loginRoute.use(validatorRoute)
+
+loginRoute.post('/login', async (req, res) => {
   try {
     const result = await loginUser(req.body)
 
@@ -21,4 +41,4 @@ registerRoute.post('/login', async (req, res) => {
   }
 })
 
-export default registerRoute
+export default loginRoute

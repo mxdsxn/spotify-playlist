@@ -1,7 +1,10 @@
-import express, {
-  Request, Response,
-} from 'express'
-import { checkSchema } from 'express-validator'
+import express from 'express'
+
+import {
+  checkSchema,
+  validationResult,
+} from 'express-validator'
+
 import registerUser from './register-service'
 
 const validatorRoute = checkSchema({
@@ -24,7 +27,13 @@ const validatorRoute = checkSchema({
 
 const registerRoute = express.Router()
 
-registerRoute.post('/register', validatorRoute, async (req: Request, res: Response) => {
+registerRoute.use(validatorRoute)
+
+registerRoute.post('/register', async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.mapped() })
+  }
   try {
     const result = await registerUser(req.body)
 
