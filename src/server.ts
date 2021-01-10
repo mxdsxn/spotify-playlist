@@ -2,7 +2,7 @@ import express from 'express'
 
 import {
   authRouter,
-  spotifyConnectionRouter,
+  spotifyConnectionRoute,
 } from '@useCases'
 
 const server = express()
@@ -11,7 +11,7 @@ server.use(express.json())
 
 server.use(
   authRouter,
-  spotifyConnectionRouter,
+  spotifyConnectionRoute,
 )
 
 export default server
