@@ -3,21 +3,14 @@
  * https://jestjs.io/docs/en/configuration.html
  */
 
-/*
- * const { pathsToModuleNameMapper } = require('ts-jest/utils')
- * const { compilerOptions } = require('./tsconfig.json')
- */
-
 export default {
   /*
    * All imported modules in your tests should be mocked automatically
    * automock: false,
    */
 
-  /*
-   * Stop running tests after `n` failures
-   * bail: 0,
-   */
+  // Stop running tests after `n` failures
+  bail: 0,
 
   /*
    * The directory where Jest should store its cached dependency information
@@ -34,12 +27,11 @@ export default {
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
-    // "<rootDir>/src/**/*.ts",
-    'src/**/*.ts',
+    '<rootDir>/src/**/*.ts',
   ],
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: '__coverage__',
+  coverageDirectory: 'coverage',
 
   /*
    * An array of regexp pattern strings used to skip coverage collection
@@ -103,10 +95,17 @@ export default {
    * ],
    */
 
-  // An array of file extensions your modules use
-  moduleFileExtensions: [
-    'js', 'json', 'jsx', 'ts', 'tsx', 'node',
-  ],
+  /*
+   * An array of file extensions your modules use
+   * moduleFileExtensions: [
+   *   "js",
+   *   "json",
+   *   "jsx",
+   *   "ts",
+   *   "tsx",
+   *   "node"
+   * ],
+   */
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
@@ -252,7 +251,12 @@ export default {
    * timers: "real",
    */
 
-  // A map from regular expressions to paths to transformers
+  /*
+   * A map from regular expressions to paths to transformers
+   * transform: undefined,
+   */
+
+  // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transform: {
     '^.+\\.ts$':
       'ts-jest',
