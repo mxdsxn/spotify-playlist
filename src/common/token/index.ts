@@ -45,7 +45,6 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     if (decoded) {
       req.body.userId = decoded.useCreateIndex
 
-      console.log({ decoded })
       return next()
     }
   })

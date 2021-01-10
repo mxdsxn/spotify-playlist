@@ -1,7 +1,10 @@
+import { verifyToken } from '@token'
 import express from 'express'
 import spotifyService from '.'
 
 const spotifyConnectionRouter = express.Router()
+
+spotifyConnectionRouter.use(verifyToken)
 
 spotifyConnectionRouter.get('/authorization-code', async (req, res) => {
   const result = spotifyService.getAppAuthorizationUrl()
