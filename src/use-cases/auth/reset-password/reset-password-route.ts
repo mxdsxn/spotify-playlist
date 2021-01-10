@@ -1,9 +1,34 @@
 import express from 'express'
+import { checkSchema, validationResult } from 'express-validator'
 import resetPassword from './reset-password-service'
 
 const resetPasswordRoute = express.Router()
 
+const validationRoute = checkSchema({
+  email: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true
+  },
+  newPassword: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true
+  },
+  resetCode: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true
+  },
+})
+
 resetPasswordRoute.post('/reset_password', async (req, res) => {
+  const errors = validationResult(validationRoute)
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.mapped() })
+  }
+
   try {
     const result = await resetPassword(req.body)
 

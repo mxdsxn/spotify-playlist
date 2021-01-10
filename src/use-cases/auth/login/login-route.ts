@@ -21,9 +21,16 @@ const validatorRoute = checkSchema({
 })
 
 const loginRoute = express.Router()
+
 loginRoute.use(validatorRoute)
 
 loginRoute.post('/login', async (req, res) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.mapped() })
+  }
+
   try {
     const result = await loginUser(req.body)
 
