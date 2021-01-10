@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 
-import setToken from '@token'
+import { setToken } from '@token'
 import { userSchema, IUser } from '@schemas'
 
 const loginUser = async (userToAuthenticate: IUser) => {
