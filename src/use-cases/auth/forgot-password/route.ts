@@ -1,6 +1,6 @@
 import express from 'express'
 import { checkSchema, validationResult } from 'express-validator'
-import forgotPassword from './forgot-password-service'
+import forgotPassword from './service'
 
 const forgotPasswordRoute = express.Router()
 

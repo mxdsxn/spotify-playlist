@@ -5,13 +5,13 @@ import { loginRoute } from './login'
 import { registerRoute } from './register'
 import { resetPasswordRoute } from './reset-password'
 
-const authRouter = express.Router()
+const authRoute = express.Router()
 
-authRouter.use('/auth',
-               forgotPasswordRoute,
-               loginRoute,
-               registerRoute,
-               resetPasswordRoute,
+authRoute.use('/auth',
+  forgotPasswordRoute,
+  loginRoute,
+  registerRoute,
+  resetPasswordRoute,
 )
 
-export default authRouter
+export default authRoute

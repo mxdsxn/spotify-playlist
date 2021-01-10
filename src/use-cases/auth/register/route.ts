@@ -5,7 +5,7 @@ import {
   validationResult,
 } from 'express-validator'
 
-import registerUser from './register-service'
+import registerUser from './service'
 
 const validatorRoute = checkSchema({
   name: {
