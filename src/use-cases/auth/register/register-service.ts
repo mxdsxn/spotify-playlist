@@ -1,5 +1,4 @@
-import { userSchema } from '@schemas'
-import { IUser } from '@interfaces'
+import { userSchema, IUser } from '@schemas'
 
 const registerUser = async (newUserData: IUser) => {
 

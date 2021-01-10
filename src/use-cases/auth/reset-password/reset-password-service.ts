@@ -1,10 +1,10 @@
 import { userSchema } from '@schemas'
-interface resetPasswordInterface {
+interface IResetPassword {
   email: string,
   resetCode: string,
   newPassword: string,
 }
-const resetPassword = async (newUserData: resetPasswordInterface) => {
+const resetPassword = async (newUserData: IResetPassword) => {
 
   try {
     const checkExistUser = await userSchema.findOne({ email: newUserData.email }).select('+passwordResetExpires passwordResetCode')
@@ -46,7 +46,7 @@ const resetPassword = async (newUserData: resetPasswordInterface) => {
       message: 'Senha alterada com sucesso.',
       resources: {
         resetPassword: 'Ok',
-        checkExistUser, 
+        checkExistUser,
       },
     }
     return result

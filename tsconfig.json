@@ -31,9 +31,6 @@
       "@schemas": [
         "./src/schemas"
       ],
-      "@interfaces": [
-        "./src/schemas/interfaces.ts"
-      ],
     }
   },
   "include": [

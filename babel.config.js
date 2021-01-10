@@ -17,7 +17,6 @@ module.exports = {
         '@useCases': './src/use-cases',
         '@token': './src/common/token',
         '@schemas': './src/common/schemas',
-        '@interfaces': './src/common/schemas/interfaces.ts',
       }
     }]
   ],
