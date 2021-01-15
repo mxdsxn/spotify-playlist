@@ -1,12 +1,11 @@
 import mongoose from 'mongoose'
-import mongoConnection from '../database'
 
 export interface ITrack extends mongoose.Document {
   trackSpotifyId: string,
   trackName: string,
 }
 
-const TrackSchema = new mongoConnection.Schema({
+const TrackSchema = new mongoose.Schema({
   trackSpotifyId: {
     type: String,
     required: true,
@@ -17,6 +16,6 @@ const TrackSchema = new mongoConnection.Schema({
   },
 })
 
-const Track = mongoConnection.model<ITrack>('Track', TrackSchema)
+const Track = mongoose.model<ITrack>('Track', TrackSchema)
 
 export default Track

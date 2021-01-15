@@ -1,7 +1,5 @@
 import mongoose from 'mongoose'
 
-import mongoConnection from '../database'
-
 export interface IPlaylist extends mongoose.Document {
   name: string,
   description: string,
@@ -10,7 +8,7 @@ export interface IPlaylist extends mongoose.Document {
   userId: string,
 }
 
-const PlaylistSchema = new mongoConnection.Schema({
+const PlaylistSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -20,7 +18,7 @@ const PlaylistSchema = new mongoConnection.Schema({
     required: false,
   },
   tracks: [{
-    type: mongoConnection.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Track',
   }],
   isPrivate: {
@@ -28,11 +26,11 @@ const PlaylistSchema = new mongoConnection.Schema({
     required: true,
   },
   userId: {
-    type: mongoConnection.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
 })
 
-const Playlist = mongoConnection.model<IPlaylist>('Playlist', PlaylistSchema)
+const Playlist = mongoose.model<IPlaylist>('Playlist', PlaylistSchema)
 
 export default Playlist

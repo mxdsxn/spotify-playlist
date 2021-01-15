@@ -1,8 +1,6 @@
 import bcrypt from 'bcryptjs'
 import mongoose from 'mongoose'
 
-import mongoConnection from '../database'
-
 export interface IUser extends mongoose.Document {
   name: string,
   email: string,
@@ -13,7 +11,7 @@ export interface IUser extends mongoose.Document {
   createdAt: Date,
 }
 
-const UserSchema = new mongoConnection.Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -54,6 +52,6 @@ UserSchema.pre('save', async function (next) {
   next()
 })
 
-const User = mongoConnection.model<IUser>('User', UserSchema)
+const User = mongoose.model<IUser>('User', UserSchema)
 
 export default User
