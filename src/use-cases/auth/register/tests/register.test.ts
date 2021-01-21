@@ -1,21 +1,21 @@
-import {
-  IUser, userSchema,
-} from '../../../../schemas'
+import { UserSchema } from '@schemas'
+import { userInterface } from '@interfaces'
+import { UserType } from '@types'
+
 import registerUser from '../service'
-import { UserSchemaType } from '../../../../schemas/user'
 
 const mockUser = {
   email: 'email@mail.com',
   password: '12303i1204912039412',
   name: 'madson',
-} as IUser
+} as userInterface
 
 jest.setTimeout(30000000)
 
-jest.mock('../../../../schemas')
+jest.mock('@schemas')
 
 describe('Register Use Case', () => {
-  let userSchemaMocked: jest.Mocked<typeof userSchema>
+  let userSchemaMocked: jest.Mocked<typeof UserSchema>
 
   beforeAll(async () => {
   })
@@ -25,7 +25,7 @@ describe('Register Use Case', () => {
   })
 
   beforeEach(async () => {
-    userSchemaMocked = userSchema as jest.Mocked<typeof userSchema>
+    userSchemaMocked = userSchema as jest.Mocked<typeof UserSchema>
   })
 
   it('Registring a new user', async () => {
@@ -36,7 +36,7 @@ describe('Register Use Case', () => {
       email: mockUser.email,
       name: mockUser.name,
       createdAt: new Date().toDateString(),
-    } as unknown as UserSchemaType
+    } as unknown as UserType
 
     userSchemaMocked.exists.mockResolvedValue(false)
     userSchemaMocked.create.mockResolvedValue(mockUserSchemaCreate)
