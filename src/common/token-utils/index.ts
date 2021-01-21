@@ -1,4 +1,6 @@
-import { NextFunction, Request, Response } from 'express'
+import {
+  NextFunction, Request, Response,
+} from 'express'
 import jwt from 'jsonwebtoken'
 
 const secretString = process.env.AUTH_SECRET as string
@@ -29,8 +31,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
   }
 
   const [
-    scheme,
-    token,
+    scheme, token,
   ] = authParts
 
   if ('Bearer' !== scheme) {
@@ -49,10 +50,9 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     }
   })
 
-
 }
 
-export {
+export default {
   setToken,
   verifyToken,
 }

@@ -1,7 +1,11 @@
 import bcrypt from 'bcryptjs'
 
-import { setToken } from '@token'
-import { userSchema, IUser } from '@schemas'
+import { tokenUtils } from '@common'
+import {
+  userSchema, IUser,
+} from '@schemas'
+
+const { setToken } = tokenUtils
 
 const loginUser = async (userToAuthenticate: IUser) => {
 
