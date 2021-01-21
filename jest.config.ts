@@ -1,7 +1,5 @@
-/*
- * For a detailed explanation regarding each configuration property and type check, visit:
- * https://jestjs.io/docs/en/configuration.html
- */
+// For a detailed explanation regarding each configuration property and type check, visit:
+// https://jestjs.io/docs/en/configuration.html
 
 export default {
   // All imported modules in your tests should be mocked automatically
@@ -21,11 +19,11 @@ export default {
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   collectCoverageFrom: [
-    "<rootDir>/src/**/*.ts"
+    '<rootDir>/src/**/*.ts',
   ],
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: "coverage",
+  coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -33,12 +31,11 @@ export default {
   // ],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "v8",
+  coverageProvider: 'v8',
 
   // A list of reporter names that Jest uses when writing coverage reports
   coverageReporters: [
-    "json",
-    "lcov",
+    'json', 'lcov',
   ],
 
   // An object that configures minimum threshold enforcement for coverage results
@@ -93,7 +90,7 @@ export default {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: '@shelf/jest-mongodb',
+  // preset: '@shelf/jest-mongodb',
 
   // Run tests from one or more projects
   // projects: undefined,
@@ -137,7 +134,7 @@ export default {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: "node",
+  testEnvironment: 'node',
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -174,9 +171,7 @@ export default {
   // transform: undefined,
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  transform: {
-    '^.+\\.ts$': 'ts-jest',
-  },
+  transform: { '^.+\\.ts$': 'ts-jest' },
 
   // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
   // unmockedModulePathPatterns: undefined,
@@ -189,4 +184,4 @@ export default {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-};
+}
