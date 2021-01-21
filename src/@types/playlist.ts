@@ -1,6 +1,6 @@
 import { Document } from 'mongoose'
 import { playlistInterface } from '@interfaces'
 
-type PlaylistType = playlistInterface & Document
+type PlaylistSchemaType = playlistInterface & Document
 
-export default PlaylistType
+export default PlaylistSchemaType

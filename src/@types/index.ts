@@ -1,3 +1,3 @@
-export { default as PlaylistType } from './playlist'
-export { default as TrackType } from './track'
-export { default as UserType } from './user'
+export { default as PlaylistSchemaType } from './playlist'
+export { default as TrackSchemaType } from './track'
+export { default as UserSchemaType } from './user'

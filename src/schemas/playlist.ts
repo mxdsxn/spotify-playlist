@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import { PlaylistType } from '@types'
+import { PlaylistSchemaType } from '@types'
 
 const PlaylistSchema = new mongoose.Schema({
   name: {
@@ -24,6 +24,6 @@ const PlaylistSchema = new mongoose.Schema({
   },
 })
 
-const Playlist = mongoose.model<PlaylistType>('Playlist', PlaylistSchema)
+const Playlist = mongoose.model<PlaylistSchemaType>('Playlist', PlaylistSchema)
 
 export default Playlist

@@ -1,6 +1,6 @@
 import { UserSchema } from '@schemas'
 import { userInterface } from '@interfaces'
-import { UserType } from '@types'
+import { UserSchemaType } from '@types'
 
 import registerUser from '../service'
 
@@ -25,7 +25,7 @@ describe('Register Use Case', () => {
   })
 
   beforeEach(async () => {
-    userSchemaMocked = userSchema as jest.Mocked<typeof UserSchema>
+    userSchemaMocked = UserSchema as jest.Mocked<typeof UserSchema>
   })
 
   it('Registring a new user', async () => {
@@ -36,7 +36,7 @@ describe('Register Use Case', () => {
       email: mockUser.email,
       name: mockUser.name,
       createdAt: new Date().toDateString(),
-    } as unknown as UserType
+    } as unknown as UserSchemaType
 
     userSchemaMocked.exists.mockResolvedValue(false)
     userSchemaMocked.create.mockResolvedValue(mockUserSchemaCreate)

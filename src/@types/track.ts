@@ -1,6 +1,6 @@
 import { Document } from 'mongoose'
 import { trackInterface } from '@interfaces'
 
-type TrackType = trackInterface & Document
+type TrackSchemaType = trackInterface & Document
 
-export default TrackType
+export default TrackSchemaType

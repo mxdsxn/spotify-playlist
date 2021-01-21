@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs'
 import mongoose from 'mongoose'
-import { UserType } from '@types'
+import { UserSchemaType } from '@types'
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -43,6 +43,6 @@ UserSchema.pre('save', async function (next) {
   next()
 })
 
-const User = mongoose.model<UserType>('User', UserSchema)
+const User = mongoose.model<UserSchemaType>('User', UserSchema)
 
 export default User
