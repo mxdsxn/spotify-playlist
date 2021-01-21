@@ -1,11 +1,11 @@
 import crypto from 'crypto'
 
-import { userSchema, IUser } from '@schemas'
+import { UserSchema, userInterface } from '@schemas'
 
-const forgotPassword = async (newUserData: IUser) => {
+const forgotPassword = async (newUserData: userInterface) => {
 
   try {
-    const checkExistUser = await userSchema.findOne({ email: newUserData.email })
+    const checkExistUser = await UserSchema.findOne({ email: newUserData.email })
 
     if (!checkExistUser) {
       const result = {
@@ -20,7 +20,7 @@ const forgotPassword = async (newUserData: IUser) => {
     const now = new Date()
     now.setHours(now.getHours() + 1)
 
-    await userSchema.findByIdAndUpdate(checkExistUser.get('id'), {
+    await UserSchema.findByIdAndUpdate(checkExistUser.get('id'), {
       passwordResetExpires: now.getTime().toString(),
       passwordResetCode: resetCode,
     })

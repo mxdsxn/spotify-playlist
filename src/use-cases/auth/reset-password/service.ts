@@ -1,4 +1,4 @@
-import { userSchema } from '@schemas'
+import { UserSchema } from '@schemas'
 interface IResetPassword {
   email: string,
   resetCode: string,
@@ -7,7 +7,7 @@ interface IResetPassword {
 const resetPassword = async (newUserData: IResetPassword) => {
 
   try {
-    const checkExistUser = await userSchema.findOne({ email: newUserData.email }).select('+passwordResetExpires passwordResetCode')
+    const checkExistUser = await UserSchema.findOne({ email: newUserData.email }).select('+passwordResetExpires passwordResetCode')
 
     if (!checkExistUser) {
       const result = {

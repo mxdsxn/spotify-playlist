@@ -1,9 +1,5 @@
 import mongoose from 'mongoose'
-
-export interface ITrack extends mongoose.Document {
-  trackSpotifyId: string,
-  trackName: string,
-}
+import { TrackType } from '@types'
 
 const TrackSchema = new mongoose.Schema({
   trackSpotifyId: {
@@ -16,6 +12,6 @@ const TrackSchema = new mongoose.Schema({
   },
 })
 
-const Track = mongoose.model<ITrack>('Track', TrackSchema)
+const Track = mongoose.model<TrackType>('Track', TrackSchema)
 
 export default Track

@@ -1,7 +1,3 @@
-export { default as playlistSchema } from './playlist'
-export { default as trackSchema } from './track'
-export { default as userSchema } from './user'
-
-export { IPlaylist } from './playlist'
-export { ITrack } from './track'
-export { IUser } from './user'
+export { default as PlaylistSchema } from './playlist'
+export { default as TrackSchema } from './track'
+export { default as UserSchema } from './user'

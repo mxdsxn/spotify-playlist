@@ -1,12 +1,5 @@
 import mongoose from 'mongoose'
-
-export interface IPlaylist extends mongoose.Document {
-  name: string,
-  description: string,
-  tracks: [any],
-  isPrivate: boolean,
-  userId: string,
-}
+import { PlaylistType } from '@types'
 
 const PlaylistSchema = new mongoose.Schema({
   name: {
@@ -31,6 +24,6 @@ const PlaylistSchema = new mongoose.Schema({
   },
 })
 
-const Playlist = mongoose.model<IPlaylist>('Playlist', PlaylistSchema)
+const Playlist = mongoose.model<PlaylistType>('Playlist', PlaylistSchema)
 
 export default Playlist

@@ -2,15 +2,15 @@ import bcrypt from 'bcryptjs'
 
 import { tokenUtils } from '@common'
 import {
-  userSchema, IUser,
+  UserSchema, userInterface,
 } from '@schemas'
 
 const { setToken } = tokenUtils
 
-const loginUser = async (userToAuthenticate: IUser) => {
+const loginUser = async (userToAuthenticate: userInterface) => {
 
   try {
-    const user = await userSchema.findOne({ email: userToAuthenticate.email }).select('+password')
+    const user = await UserSchema.findOne({ email: userToAuthenticate.email }).select('+password')
 
     if (!user) {
       const result = {
