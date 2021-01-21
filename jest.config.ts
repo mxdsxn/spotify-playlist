@@ -108,10 +108,14 @@ export default {
     'js', 'json', 'jsx', 'ts', 'tsx', 'node',
   ],
 
-  /*
-   * A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-   * moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/src/' }),
-   */
+  // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
+  moduleNameMapper: {
+    '@common': '<rootDir>/src/common/',
+    '@interfaces': '<rootDir>/src/interfaces/',
+    '@schemas': '<rootDir>/src/schemas/',
+    '@types': '<rootDir>/src/@types/',
+    '@useCases': '<rootDir>/src/use-cases/',
+  },
 
   /*
    * An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
@@ -128,8 +132,10 @@ export default {
    * notifyMode: "failure-change",
    */
 
-  // A preset that is used as a base for Jest's configuration
-  preset: '@shelf/jest-mongodb',
+  /*
+   * A preset that is used as a base for Jest's configuration
+   * preset: '@shelf/jest-mongodb',
+   */
 
   /*
    * Run tests from one or more projects
@@ -161,10 +167,8 @@ export default {
    * restoreMocks: false,
    */
 
-  /*
-   * The root directory that Jest should scan for tests and modules within
-   * rootDir: undefined,
-   */
+  // The root directory that Jest should scan for tests and modules within
+  rootDir: '.',
 
   /*
    * A list of paths to directories that Jest should use to search for files in
@@ -251,7 +255,7 @@ export default {
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.ts$':
-   'ts-jest',
+      'ts-jest',
   },
 
   /*

@@ -22,14 +22,20 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@useCases": [
-        "./src/use-cases"
+      "@common": [
+        "src/common"
       ],
-      "@token": [
-        "./src/common/token"
+      "@interfaces": [
+        "src/interfaces"
       ],
       "@schemas": [
-        "./src/schemas"
+        "src/schemas"
+      ],
+      "@types": [
+        "src/@types"
+      ],
+      "@useCases": [
+        "src/use-cases"
       ],
     }
   },
