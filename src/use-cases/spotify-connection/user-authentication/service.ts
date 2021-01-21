@@ -31,6 +31,4 @@ const getAppAuthenticationUrl = async (codeAuthorization: string) => {
   }
 }
 
-export default {
-  getAppAuthenticationUrl,
-}
+export default { getAppAuthenticationUrl }

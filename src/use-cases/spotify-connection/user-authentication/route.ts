@@ -1,5 +1,5 @@
 import express from 'express'
-import User from 'src/schemas/user'
+import { UserSchema } from '@schemas'
 import spotifyService from './service'
 
 const userAuthenticationRoute = express.Router()
@@ -9,13 +9,10 @@ userAuthenticationRoute.get('/authentication-token', async (req, res) => {
     const codeAuthorization = req.query.code as string
     const result = await spotifyService.getAppAuthenticationUrl(codeAuthorization)
 
-
     const { access_token } = result
     const { userId } = req.body
 
-    await User.findByIdAndUpdate(userId, {
-      spotifyToken: access_token
-    })
+    await UserSchema.findByIdAndUpdate(userId, { spotifyToken: access_token })
 
     return res.json(result)
 

@@ -1,9 +1,8 @@
 import bcrypt from 'bcryptjs'
 
 import { tokenUtils } from '@common'
-import {
-  UserSchema, userInterface,
-} from '@schemas'
+import { userInterface } from '@interfaces'
+import { UserSchema } from '@schemas'
 
 const { setToken } = tokenUtils
 

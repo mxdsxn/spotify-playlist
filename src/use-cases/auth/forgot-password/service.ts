@@ -1,6 +1,7 @@
 import crypto from 'crypto'
 
-import { UserSchema, userInterface } from '@schemas'
+import { userInterface } from '@interfaces'
+import { UserSchema } from '@schemas'
 
 const forgotPassword = async (newUserData: userInterface) => {
 

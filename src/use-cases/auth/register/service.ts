@@ -1,6 +1,5 @@
-import {
-  UserSchema, userInterface,
-} from '@schemas'
+import { userInterface } from '@interfaces'
+import { UserSchema } from '@schemas'
 
 const registerUser = async (newUserData: userInterface) => {
 
