@@ -38,7 +38,10 @@ registerRoute.post('/register', async (req, res) => {
   try {
     const result = await registerUser(req.body)
 
-    const statusCode = result.resources !== null ? 200 : 409
+    const statusCode = result.hasError
+      ? 409
+      : 201
+
     return res
       .status(statusCode)
       .json(result)

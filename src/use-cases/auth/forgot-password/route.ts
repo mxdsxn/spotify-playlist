@@ -1,5 +1,7 @@
 import express from 'express'
-import { checkSchema, validationResult } from 'express-validator'
+import {
+  checkSchema, validationResult,
+} from 'express-validator'
 import forgotPassword from './service'
 
 const forgotPasswordRoute = express.Router()
@@ -8,7 +10,7 @@ const validationRoute = checkSchema({
   email: {
     in: ['body'],
     isString: true,
-    notEmpty: true
+    notEmpty: true,
   },
 })
 
@@ -22,7 +24,10 @@ forgotPasswordRoute.post('/forgot_password', async (req, res) => {
   try {
     const result = await forgotPassword(req.body)
 
-    const statusCode = result.resources !== null ? 200 : 401
+    const statusCode = result.hasError
+      ? 200
+      : 401
+
     return res
       .status(statusCode)
       .json(result)
