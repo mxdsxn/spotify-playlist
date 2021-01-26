@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 
 const secretString = process.env.AUTH_SECRET as string
 
-const setToken = async (id: string) => {
+const setToken = async (id: string): Promise<string> => {
   const daysToExpire = 1
   const hoursToExpire = 24
   const minutesToExpire = 60
@@ -18,7 +18,7 @@ const setToken = async (id: string) => {
   })
 }
 
-const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+const verifyToken = (req: Request, res: Response, next: NextFunction): Response | void => {
   const { authorization } = req.headers
   if (!authorization) {
     return res.status(401).json({ error: 'Não há token de autorização.' })

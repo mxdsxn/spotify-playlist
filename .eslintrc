@@ -62,7 +62,7 @@
     "block-scoped-var": "error",
     "default-case": "error",
     "no-param-reassign": [
-      "error",
+      "warn",
       {
         "props": true
       }
