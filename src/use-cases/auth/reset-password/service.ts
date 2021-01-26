@@ -1,18 +1,21 @@
+import { resultInterface } from '@interfaces'
 import { UserSchema } from '@schemas'
+
 interface IResetPassword {
   email: string,
   resetCode: string,
   newPassword: string,
 }
-const resetPassword = async (newUserData: IResetPassword) => {
+
+const resetPassword = async (newUserData: IResetPassword): Promise<resultInterface> => {
 
   try {
     const checkExistUser = await UserSchema.findOne({ email: newUserData.email }).select('+passwordResetExpires passwordResetCode')
 
     if (!checkExistUser) {
-      const result = {
+      const result: resultInterface = {
         message: 'Usuário não encontrado.',
-        resources: null,
+        hasError: true,
       }
       return result
     }
@@ -21,15 +24,15 @@ const resetPassword = async (newUserData: IResetPassword) => {
     const userResetCodeExpire = checkExistUser.get('passwordResetExpires')
 
     if (userResetCode !== newUserData.resetCode) {
-      const result = {
+      const result: resultInterface = {
         message: 'Codigo inválido.',
-        resources: null,
+        hasError: true,
       }
       return result
     } else if (userResetCodeExpire < new Date().getTime()) {
-      const result = {
+      const result: resultInterface = {
         message: 'Codigo expirado.',
-        resources: null,
+        hasError: true,
       }
       return result
     }
@@ -42,19 +45,16 @@ const resetPassword = async (newUserData: IResetPassword) => {
 
     await checkExistUser.save()
 
-    const result = {
+    const result: resultInterface = {
       message: 'Senha alterada com sucesso.',
-      resources: {
-        resetPassword: 'Ok',
-        checkExistUser,
-      },
+      hasError: false,
     }
     return result
 
   } catch (error) {
-    const result = {
+    const result: resultInterface = {
       message: 'Erro ao encontrar resetar senha do usuário',
-      resources: null,
+      hasError: true,
     }
     return result
   }
