@@ -34,7 +34,10 @@ loginRoute.post('/login', async (req, res) => {
   try {
     const result = await loginUser(req.body)
 
-    const statusCode = result.resources !== null ? 200 : 401
+    const statusCode = result.hasError
+      ? 200
+      : 401
+
     return res
       .status(statusCode)
       .json(result)

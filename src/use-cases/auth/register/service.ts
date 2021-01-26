@@ -1,15 +1,22 @@
-import { userInterface } from '@interfaces'
+import {
+  userInterface, resultInterface,
+} from '@interfaces'
 import { UserSchema } from '@schemas'
+import { UserSchemaType } from '@types'
 
-const registerUser = async (newUserData: userInterface) => {
+interface registerResult extends resultInterface {
+  resources?: { user: UserSchemaType }
+}
+
+const registerUser = async (newUserData: userInterface): Promise<registerResult> => {
 
   try {
     const checkExistUser = await UserSchema.exists({ email: newUserData.email })
 
     if (checkExistUser) {
-      const result = {
+      const result: registerResult = {
+        hasError: true,
         message: 'Email já registrado.',
-        resources: null,
       }
       return result
     }
@@ -17,16 +24,17 @@ const registerUser = async (newUserData: userInterface) => {
     const newUser = await UserSchema.create(newUserData)
     newUser.set({ password: undefined })
 
-    const result = {
+    const result: registerResult = {
+      hasError: false,
       message: 'Registrado com sucesso.',
       resources: { user: newUser },
     }
     return result
 
   } catch (error) {
-    const result = {
+    const result: registerResult = {
+      hasError: true,
       message: 'Erro ao cadastrar novo usuário',
-      resources: null,
     }
     return result
   }

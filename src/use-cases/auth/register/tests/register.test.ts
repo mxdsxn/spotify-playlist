@@ -17,9 +17,6 @@ jest.mock('@schemas')
 describe('Register Use Case', () => {
   let userSchemaMocked: jest.Mocked<typeof UserSchema>
 
-  beforeAll(async () => {
-  })
-
   afterEach(async () => {
     jest.clearAllMocks()
   })
@@ -48,6 +45,7 @@ describe('Register Use Case', () => {
     expect(mockUserSchemaCreate.set).toHaveBeenCalledTimes(1)
 
     expect(result).toEqual(expect.objectContaining({
+      hasError: false,
       message: expect.any(String),
       resources: { user: expect.any(Object) },
     }))
@@ -60,8 +58,8 @@ describe('Register Use Case', () => {
 
     expect(userSchemaMocked.exists).toHaveBeenCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
+      hasError: true,
       message: expect.any(String),
-      resources: null,
     }))
   })
 })

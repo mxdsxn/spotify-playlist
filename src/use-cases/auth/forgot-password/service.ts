@@ -1,17 +1,23 @@
 import crypto from 'crypto'
 
-import { userInterface } from '@interfaces'
+import {
+  userInterface, resultInterface,
+} from '@interfaces'
 import { UserSchema } from '@schemas'
 
-const forgotPassword = async (newUserData: userInterface) => {
+interface forgotPasswordResult extends resultInterface {
+  resources?: { resetCode: string }
+}
+
+const forgotPassword = async (newUserData: userInterface): Promise<forgotPasswordResult> => {
 
   try {
     const checkExistUser = await UserSchema.findOne({ email: newUserData.email })
 
     if (!checkExistUser) {
-      const result = {
+      const result: forgotPasswordResult = {
         message: 'Usuário não encontrado.',
-        resources: null,
+        hasError: true,
       }
       return result
     }
@@ -26,16 +32,17 @@ const forgotPassword = async (newUserData: userInterface) => {
       passwordResetCode: resetCode,
     })
 
-    const result = {
+    const result: forgotPasswordResult = {
       message: 'Codigo para reset de senha gerado com sucesso.',
+      hasError: false,
       resources: { resetCode },
     }
     return result
 
   } catch (error) {
-    const result = {
+    const result: forgotPasswordResult = {
       message: 'Erro ao gerar codigo para reset senha do usuário',
-      resources: null,
+      hasError: true,
     }
     return result
   }
