@@ -9,7 +9,7 @@ const spotifyConnectionRoute = express.Router()
 
 spotifyConnectionRoute.use(verifyToken)
 spotifyConnectionRoute.use(
-  '/spotify_connection',
+  '/spotify-connection',
   appAuthorizationRoute,
   userAuthenticationRoute,
 )

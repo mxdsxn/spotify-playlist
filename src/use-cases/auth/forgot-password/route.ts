@@ -14,7 +14,7 @@ const validationRoute = checkSchema({
   },
 })
 
-forgotPasswordRoute.post('/forgot_password', async (req, res) => {
+forgotPasswordRoute.post('/forgot-password', async (req, res) => {
   const errors = validationResult(validationRoute)
 
   if (!errors.isEmpty()) {

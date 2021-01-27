@@ -4,7 +4,7 @@ import spotifyService from './service'
 const appAuthorizationRoute = express.Router()
 
 appAuthorizationRoute.get('/authorization-code', async (req, res) => {
-  const result = spotifyService.getAppAuthorizationUrl()
+  const result = await spotifyService.getAppAuthorizationUrl()
 
   if (result) {
     return res.redirect(200, result)
@@ -14,10 +14,11 @@ appAuthorizationRoute.get('/authorization-code', async (req, res) => {
 
 })
 
-appAuthorizationRoute.get('/response-spotify', async (req, res) => {
+appAuthorizationRoute.get('/spotilist-callback-url', async (req, res) => {
   const { query } = req
   if (query.code) {
-    return res.redirect(200, '/authentication-token')
+    const codeAuthorization = `?code=${encodeURIComponent(query.code as string)}`
+    return res.redirect(200, '/spotify-connection/authentication-token' + codeAuthorization)
 
   } else if (query.error) {
     return res.status(400).json({ error: query.error })
