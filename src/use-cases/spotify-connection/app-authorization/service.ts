@@ -1,20 +1,17 @@
-import axios from 'axios'
+const { CLIENT_ID } = process.env
+const REDIRECT_URI = 'http://localhost:1111/spotify-connection/spotilist-callback-url/'
 
-const {
-  CLIENT_ID, CLIENT_SECRET,
-} = process.env
-const REDIRECT_URI = 'http://localhost:1111/response-spotify/'
+const getAppAuthorizationUrl = async (): Promise<string> => {
+  const queryParams = { scope: ['user-read-private', 'user-read-email', 'playlist-modify-public', 'playlist-modify-private', 'user-read-recently-played'] }
 
-const getAppAuthorizationUrl = () => {
-  const queryParams = { scopes: 'user-read-private user-read-email' }
-
-  const query_login = 'https://accounts.spotify.com/authorize' +
+  const authorizationUrl = 'https://accounts.spotify.com/authorize' +
     '?response_type=code' +
-    '&client_id=' + CLIENT_ID +
     '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
-    '&scopes=' + encodeURIComponent(queryParams.scopes)
+    '&client_id=' + CLIENT_ID +
+    '&scope=' + encodeURIComponent(queryParams.scope.join(' ')) +
+    '&state=34fFs29kd09'
 
-  return query_login
+  return authorizationUrl
 }
 
 export default { getAppAuthorizationUrl }

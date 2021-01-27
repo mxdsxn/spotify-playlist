@@ -3,9 +3,9 @@ import axios from 'axios'
 const {
   CLIENT_ID, CLIENT_SECRET,
 } = process.env
-const REDIRECT_URI = 'http://localhost:1111/response-spotify/'
+const REDIRECT_URI = 'http://localhost:1111/spotify-connection/spotilist-callback-url/'
 
-const getAppAuthenticationUrl = async (codeAuthorization: string) => {
+const getAppAuthenticationUrl = async (codeAuthorization: string): Promise<any> => {
   const bodyParams = {
     grant_type: 'client_credentials',
     code: codeAuthorization,
@@ -16,15 +16,14 @@ const getAppAuthenticationUrl = async (codeAuthorization: string) => {
 
   const url_token = 'https://accounts.spotify.com/api/token'
 
-  let result: any
   try {
-    result = await axios.post(url_token, null, { params: bodyParams })
+    const result = await axios.post(url_token, null, { params: bodyParams })
     return result.data
 
   } catch (error) {
-    result = {
-      error: error,
+    const result = {
       message: 'Falha ao obter token.',
+      error: error,
     }
     return result
 
