@@ -24,7 +24,7 @@ const validationRoute = checkSchema({
   },
 })
 
-resetPasswordRoute.post('/reset_password', async (req, res) => {
+resetPasswordRoute.post('/reset-password', async (req, res) => {
   const errors = validationResult(validationRoute)
 
   if (!errors.isEmpty()) {
