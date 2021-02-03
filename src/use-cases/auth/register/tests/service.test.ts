@@ -62,4 +62,18 @@ describe('Register Use Case', () => {
       message: expect.any(String),
     }))
   })
+
+  it('Error', async () => {
+    userSchemaMocked.exists.mockResolvedValue(false)
+    userSchemaMocked.create.mockRejectedValue(new Error('teste erro'))
+
+    const result = await registerUser(mockUser)
+
+    expect(userSchemaMocked.exists).toHaveBeenCalledTimes(1)
+    expect(userSchemaMocked.create).toHaveBeenCalledTimes(1)
+    expect(result).toEqual(expect.objectContaining({
+      hasError: true,
+      message: 'Erro ao cadastrar novo usuário',
+    }))
+  })
 })
