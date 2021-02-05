@@ -3,9 +3,8 @@ import { envs } from '@config'
 import { resultInterface } from '@interfaces'
 
 const {
-  CLIENT_ID, CLIENT_SECRET,
+  SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTILIST_API_REDIRECT_URI,
 } = envs
-const REDIRECT_URI = 'http://localhost:1111/spotify-connection/spotilist-callback-url/'
 
 interface spotifyAuthentication {
   access_token: string,
@@ -14,19 +13,19 @@ interface spotifyAuthentication {
   scope: string
 }
 
+const SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token'
+
 const getAppAuthenticationUrl = async (codeAuthorization: string): Promise<spotifyAuthentication | resultInterface> => {
   const bodyParams = {
-    grant_type: 'client_credentials',
+    client_id: SPOTIFY_CLIENT_ID,
+    client_secret: SPOTIFY_CLIENT_SECRET,
     code: codeAuthorization,
-    redirect_uri: REDIRECT_URI,
-    client_id: CLIENT_ID,
-    client_secret: CLIENT_SECRET,
+    grant_type: 'client_credentials',
+    redirect_uri: SPOTILIST_API_REDIRECT_URI,
   }
 
-  const url_token = 'https://accounts.spotify.com/api/token'
-
   try {
-    const result = await axios.post(url_token, null, { params: bodyParams })
+    const result = await axios.post(SPOTIFY_TOKEN_URL, null, { params: bodyParams })
     return result.data as spotifyAuthentication
 
   } catch (error) {
@@ -35,7 +34,6 @@ const getAppAuthenticationUrl = async (codeAuthorization: string): Promise<spoti
       hasError: true,
     }
     return result
-
   }
 }
 
