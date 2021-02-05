@@ -1,7 +1,5 @@
 import { UserSchema } from '@schemas'
 import { userInterface } from '@interfaces'
-import { UserSchemaType } from '@types'
-
 import registerUser from '../service'
 
 const mockUser = {
@@ -15,17 +13,11 @@ jest.setTimeout(30000000)
 jest.mock('@schemas')
 
 describe('Register Use Case', () => {
-  let userSchemaMocked: jest.Mocked<typeof UserSchema>
-
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
-  beforeEach(async () => {
-    userSchemaMocked = UserSchema as jest.Mocked<typeof UserSchema>
-  })
-
-  it('Registring a new user', async () => {
+  it('Register a new user.', async () => {
     const mockUserSchemaCreate = {
       set: jest.fn(),
       _id: '12r3tw14gt4ty5ewg0THJ',
@@ -33,44 +25,44 @@ describe('Register Use Case', () => {
       email: mockUser.email,
       name: mockUser.name,
       createdAt: new Date().toDateString(),
-    } as unknown as UserSchemaType
+    }
 
-    userSchemaMocked.exists.mockResolvedValue(false)
-    userSchemaMocked.create.mockResolvedValue(mockUserSchemaCreate)
+    UserSchema.exists = jest.fn().mockResolvedValue(false)
+    UserSchema.create = jest.fn().mockResolvedValue(mockUserSchemaCreate)
 
     const result = await registerUser(mockUser)
 
-    expect(userSchemaMocked.exists).toHaveBeenCalledTimes(1)
-    expect(userSchemaMocked.create).toHaveBeenCalledTimes(1)
+    expect(UserSchema.exists).toHaveBeenCalledTimes(1)
+    expect(UserSchema.create).toHaveBeenCalledTimes(1)
     expect(mockUserSchemaCreate.set).toHaveBeenCalledTimes(1)
 
     expect(result).toEqual(expect.objectContaining({
       hasError: false,
-      message: expect.any(String),
+      message: 'Registrado com sucesso.',
       resources: { user: expect.any(Object) },
     }))
   })
 
-  it('Registring a new user that the email is registered', async () => {
-    userSchemaMocked.exists.mockResolvedValue(true)
+  it('Register a new user that the email is registered.', async () => {
+    UserSchema.exists = jest.fn().mockResolvedValue(true)
 
     const result = await registerUser(mockUser)
 
-    expect(userSchemaMocked.exists).toHaveBeenCalledTimes(1)
+    expect(UserSchema.exists).toHaveBeenCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
       hasError: true,
-      message: expect.any(String),
+      message: 'Email já registrado.',
     }))
   })
 
-  it('Error', async () => {
-    userSchemaMocked.exists.mockResolvedValue(false)
-    userSchemaMocked.create.mockRejectedValue(new Error('teste erro'))
+  it('Register error.', async () => {
+    UserSchema.exists = jest.fn().mockResolvedValue(false)
+    UserSchema.create = jest.fn().mockRejectedValue(new Error('teste erro'))
 
     const result = await registerUser(mockUser)
 
-    expect(userSchemaMocked.exists).toHaveBeenCalledTimes(1)
-    expect(userSchemaMocked.create).toHaveBeenCalledTimes(1)
+    expect(UserSchema.exists).toHaveBeenCalledTimes(1)
+    expect(UserSchema.create).toHaveBeenCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
       hasError: true,
       message: 'Erro ao cadastrar novo usuário',
