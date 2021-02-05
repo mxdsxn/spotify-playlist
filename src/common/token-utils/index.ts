@@ -39,12 +39,14 @@ const verifyToken = (req: Request, res: Response, next: NextFunction): Response 
     return res.status(401).json({ error: 'Token com esquema desconhecido.' })
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   jwt.verify(token, secretString, (error: any, decoded: any) => {
     if (error) {
       return res.status(400).json({ error: 'Token inválido.' })
     }
 
     if (decoded) {
+      // eslint-disable-next-line no-param-reassign
       req.body.userId = decoded.id
 
       return next()

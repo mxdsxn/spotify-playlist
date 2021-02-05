@@ -5,7 +5,6 @@ import {
 } from '@useCases'
 import mongoConnection from './database'
 
-
 mongoConnection.connection
 
 const server = express()
