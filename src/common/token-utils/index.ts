@@ -4,7 +4,7 @@ import {
 import jwt from 'jsonwebtoken'
 import { envs } from '@config'
 
-const secretString = envs.AUTH_SECRET as string || 'secret_key_test'
+const secretString = envs.TOKEN_ACCESS_SECRET_KEY as string
 
 const setToken = async (id: string): Promise<string> => {
   const daysToExpire = 1

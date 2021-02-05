@@ -1,22 +1,19 @@
 # Example .env
-
-### Enviroment
-`NODE_ENV =`
-
 ### Database
-`DB_HOST =`
+`DB_HOST`
 
-`DB_NAME =`
+`DB_NAME`
 
-`DB_PORT =`
-
+`DB_PORT`
+### Enviroment
+`NODE_ENV`
 ### Server
-`SERVER_PORT =`
+`SERVER_PORT`
+### SpotifyConnection
+`SPOTIFY_CLIENT_ID`
 
-### SpotilistID
-`CLIENT_ID =`
+`SPOTIFY_CLIENT_SECRET`
 
-`CLIENT_SECRET =`
-
+`SPOTILIST_API_REDIRECT_URI`
 ### Authentication
-`AUTH_SECRET =`
+`TOKEN_ACCESS_SECRET_KEY`
