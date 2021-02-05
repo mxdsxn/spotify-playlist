@@ -12,13 +12,13 @@ jest.setTimeout(30000000)
 jest.mock('@schemas')
 jest.mock('bcryptjs')
 
-describe('Login Use Case', () => {
+describe('Login Use Case:', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
   it('Login with all the correct parameters.', async () => {
-    const findOneSelectMocked = () => ({
+    const findOneSelectMocked = {
       select: jest.fn().mockResolvedValue({
         _id: '12r3tw14gt4ty5ewg0THJ',
         __V: 0,
@@ -28,9 +28,9 @@ describe('Login Use Case', () => {
         createdAt: new Date().toDateString(),
         get: jest.fn().mockReturnValue('12r3tw14gt4ty5ewg0THJ'),
       })
-    })
+    }
 
-    UserSchema.findOne = jest.fn().mockImplementation(findOneSelectMocked)
+    UserSchema.findOne = jest.fn().mockImplementation(() => findOneSelectMocked)
     bcrypt.compare = jest.fn().mockResolvedValue(true)
 
     const result = await loginUser(mockUser)
@@ -47,11 +47,11 @@ describe('Login Use Case', () => {
   })
 
   it('Login with invalid email.', async () => {
-    const findOneSelectMocked = () => ({
+    const findOneSelectMocked = {
       select: jest.fn().mockResolvedValue(null)
-    })
+    }
 
-    UserSchema.findOne = jest.fn().mockImplementation(findOneSelectMocked)
+    UserSchema.findOne = jest.fn().mockImplementation(() => findOneSelectMocked)
 
     const result = await loginUser(mockUser)
 
@@ -63,7 +63,7 @@ describe('Login Use Case', () => {
   })
 
   it('Login with invalid password.', async () => {
-    const findOneSelectMocked = () => ({
+    const findOneSelectMocked = {
       select: jest.fn().mockResolvedValue({
         _id: '12r3tw14gt4ty5ewg0THJ',
         __V: 0,
@@ -73,9 +73,9 @@ describe('Login Use Case', () => {
         createdAt: new Date().toDateString(),
         get: jest.fn().mockReturnValue('12r3tw14gt4ty5ewg0THJ'),
       })
-    })
+    }
 
-    UserSchema.findOne = jest.fn().mockImplementation(findOneSelectMocked)
+    UserSchema.findOne = jest.fn().mockImplementation(() => findOneSelectMocked)
     bcrypt.compare = jest.fn().mockResolvedValue(false)
 
     const result = await loginUser(mockUser)
@@ -89,7 +89,7 @@ describe('Login Use Case', () => {
   })
 
   it('Login error.', async () => {
-    const findOneSelectMocked = () => ({
+    const findOneSelectMocked = ({
       select: jest.fn().mockResolvedValue({
         _id: '12r3tw14gt4ty5ewg0THJ',
         __V: 0,
@@ -101,7 +101,7 @@ describe('Login Use Case', () => {
       })
     })
 
-    UserSchema.findOne = jest.fn().mockImplementation(findOneSelectMocked)
+    UserSchema.findOne = jest.fn().mockImplementation(() => findOneSelectMocked)
     bcrypt.compare = jest.fn().mockRejectedValue(new Error('Error Test'))
 
     const result = await loginUser(mockUser)

@@ -12,7 +12,7 @@ jest.setTimeout(30000000)
 
 jest.mock('@schemas')
 
-describe('Register Use Case', () => {
+describe('Register Use Case:', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
@@ -57,7 +57,7 @@ describe('Register Use Case', () => {
 
   it('Register error.', async () => {
     UserSchema.exists = jest.fn().mockResolvedValue(false)
-    UserSchema.create = jest.fn().mockRejectedValue(new Error('teste erro'))
+    UserSchema.create = jest.fn().mockRejectedValue(new Error('Error Test'))
 
     const result = await registerUser(mockUser)
 
