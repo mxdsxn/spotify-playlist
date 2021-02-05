@@ -9,6 +9,7 @@ module.exports = {
     ['module-resolver', {
       alias: {
         '@common': './src/common',
+        '@config': './src/config',
         '@interfaces': './src/interfaces',
         '@schemas': './src/schemas',
         '@types': './src/@types',

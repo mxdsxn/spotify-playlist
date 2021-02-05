@@ -1,8 +1,10 @@
 import axios from 'axios'
+import envs from '@config/env'
 
 const {
   CLIENT_ID, CLIENT_SECRET,
-} = process.env
+} = envs
+
 const REDIRECT_URI = 'http://localhost:1111/response-spotify/'
 
 const getAppAuthenticationUrl = async (codeAuthorization: string) => {

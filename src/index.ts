@@ -1,6 +1,5 @@
-// import 'dotenv/config'
 import server from './server'
-import envs from './config/env'
+import envs from '@config/env'
 
 const { SERVER_PORT } = envs
 
