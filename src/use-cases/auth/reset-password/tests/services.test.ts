@@ -1,5 +1,4 @@
 import { UserSchema } from '@schemas'
-import { userInterface } from '@interfaces'
 import resetPassword from '../service'
 
 const mockUserToPassword = {
