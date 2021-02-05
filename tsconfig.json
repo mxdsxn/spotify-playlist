@@ -25,6 +25,9 @@
       "@common": [
         "src/common"
       ],
+      "@config/*": [
+        "src/config/*"
+      ],
       "@interfaces": [
         "src/interfaces"
       ],
