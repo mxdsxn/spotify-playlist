@@ -1,6 +1,6 @@
 {
   "name": "Spotilist",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Playlist maker based in spotify api",
   "main": "index.js",
   "repository": "git@github.com:mxdsxn/spotify-playlist.git",

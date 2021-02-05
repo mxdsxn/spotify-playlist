@@ -27,7 +27,7 @@ describe('Login Use Case:', () => {
         password: mockUser.password,
         createdAt: new Date().toDateString(),
         get: jest.fn().mockReturnValue('12r3tw14gt4ty5ewg0THJ'),
-      })
+      }),
     }
 
     UserSchema.findOne = jest.fn().mockImplementation(() => findOneSelectMocked)
@@ -40,16 +40,12 @@ describe('Login Use Case:', () => {
     expect(result).toEqual(expect.objectContaining({
       message: 'Usuário autenticado.',
       hasError: false,
-      resources: expect.objectContaining({
-        token: expect.any(String)
-      })
+      resources: expect.objectContaining({ token: expect.any(String) }),
     }))
   })
 
   it('Login with invalid email.', async () => {
-    const findOneSelectMocked = {
-      select: jest.fn().mockResolvedValue(null)
-    }
+    const findOneSelectMocked = { select: jest.fn().mockResolvedValue(null) }
 
     UserSchema.findOne = jest.fn().mockImplementation(() => findOneSelectMocked)
 
@@ -72,7 +68,7 @@ describe('Login Use Case:', () => {
         password: mockUser.password,
         createdAt: new Date().toDateString(),
         get: jest.fn().mockReturnValue('12r3tw14gt4ty5ewg0THJ'),
-      })
+      }),
     }
 
     UserSchema.findOne = jest.fn().mockImplementation(() => findOneSelectMocked)
@@ -97,8 +93,8 @@ describe('Login Use Case:', () => {
         name: mockUser.name,
         password: mockUser.password,
         createdAt: new Date().toDateString(),
-        get: jest.fn().mockReturnValue('12r3tw14gt4ty5ewg0THJ')
-      })
+        get: jest.fn().mockReturnValue('12r3tw14gt4ty5ewg0THJ'),
+      }),
     })
 
     UserSchema.findOne = jest.fn().mockImplementation(() => findOneSelectMocked)

@@ -80,6 +80,7 @@ export default {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     '@common': '<rootDir>/src/common/',
+    '@config': '<rootDir>/src/config',
     '@interfaces': '<rootDir>/src/interfaces/',
     '@schemas': '<rootDir>/src/schemas/',
     '@types': '<rootDir>/src/@types/',
