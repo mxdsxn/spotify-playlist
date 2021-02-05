@@ -1,4 +1,4 @@
-import envs from '@config/env'
+import { envs } from '@config'
 
 const {
   CLIENT_ID, CLIENT_SECRET,

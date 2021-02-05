@@ -2,7 +2,7 @@ import {
   NextFunction, Request, Response,
 } from 'express'
 import jwt from 'jsonwebtoken'
-import envs from '@config/env'
+import { envs } from '@config'
 
 const secretString = envs.AUTH_SECRET as string || 'secret_key_test'
 

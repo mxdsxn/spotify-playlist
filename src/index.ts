@@ -1,5 +1,5 @@
 import server from './server'
-import envs from '@config/env'
+import { envs } from '@config'
 
 const { SERVER_PORT } = envs
 
