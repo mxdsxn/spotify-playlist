@@ -2,12 +2,13 @@ import 'dotenv/config'
 const { env } = process
 export default { ...env } as envInterface
 interface envInterface {
-  NODE_ENV?: string
   DB_HOST?: string
   DB_NAME?: string
   DB_PORT?: string
+  NODE_ENV?: string
   SERVER_PORT?: string
-  CLIENT_ID?: string
-  CLIENT_SECRET?: string
-  AUTH_SECRET?: string
+  SPOTILIST_API_REDIRECT_URI?: string
+  SPOTIFY_CLIENT_ID?: string
+  SPOTIFY_CLIENT_SECRET?: string
+  TOKEN_ACCESS_SECRET_KEY?: string
 }
