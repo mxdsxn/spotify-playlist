@@ -6,7 +6,12 @@ const {
 const REDIRECT_URI = 'http://localhost:1111/spotify-connection/spotilist-callback-url/'
 
 const getAppAuthorizationUrl = async (): Promise<string> => {
-  const queryParams = { scope: ['user-read-private', 'user-read-email', 'playlist-modify-public', 'playlist-modify-private', 'user-read-recently-played'] }
+  const queryParams = {
+    scope:
+      [
+        'user-read-private', 'user-read-email', 'playlist-modify-public', 'playlist-modify-private', 'playlist-read-private', 'playlist-read-collaborative',
+      ],
+  }
 
   const authorizationUrl = 'https://accounts.spotify.com/authorize' +
     '?response_type=code' +
