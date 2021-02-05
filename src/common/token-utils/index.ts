@@ -3,7 +3,7 @@ import {
 } from 'express'
 import jwt from 'jsonwebtoken'
 
-const secretString = process.env.AUTH_SECRET as string
+const secretString = process.env.AUTH_SECRET as string || 'secret_key_test'
 
 const setToken = async (id: string): Promise<string> => {
   const daysToExpire = 1
