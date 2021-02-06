@@ -35,8 +35,8 @@ resetPasswordRoute.post('/reset-password', async (req, res) => {
     const result = await resetPassword(req.body)
 
     const statusCode = result.hasError
-      ? 200
-      : 401
+      ? 404
+      : 201
 
     return res
       .status(statusCode)

@@ -5,6 +5,14 @@ const showPlaylist = async (playlistId: string): Promise<resultInterface> => {
   try {
     const playlist = await PlaylistSchema.findById(playlistId)
 
+    if (!playlist) {
+      const result: resultInterface = {
+        hasError: true,
+        message: 'Playlist não encontrada.',
+      }
+      return result
+    }
+
     const result: resultInterface = {
       hasError: false,
       message: 'Consulta de uma playlist.',
