@@ -1,5 +1,5 @@
 import express from 'express'
-import createPlaylistService from './service'
+import createPlaylist from './service'
 
 const createPlaylistRoute = express.Router()
 createPlaylistRoute.post('/', async (req, res) => {
@@ -12,7 +12,7 @@ createPlaylistRoute.post('/', async (req, res) => {
   }
 
   try {
-    const result = await createPlaylistService(playlistOptions)
+    const result = await createPlaylist(playlistOptions)
     const statusCode = result.hasError
       ? 409
       : 201
