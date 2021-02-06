@@ -15,7 +15,7 @@ const createPlaylist = async (playlistOptions: playlistInterface): Promise<resul
   } catch (error) {
     const result: resultInterface = {
       hasError: true,
-      message: 'Falha ao criar nova playlist.',
+      message: 'Falha ao buscar todas as playlists.',
     }
     return result
   }
