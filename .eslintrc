@@ -69,7 +69,7 @@
     ],
     "complexity": [
       "warn",
-      5
+      10
     ],
     "no-multi-spaces": [
       "error",
