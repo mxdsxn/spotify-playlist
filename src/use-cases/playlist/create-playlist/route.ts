@@ -14,8 +14,8 @@ createPlaylistRoute.post('/', async (req, res) => {
   try {
     const result = await createPlaylist(playlistOptions)
     const statusCode = result.hasError
-      ? 409
-      : 201
+      ? 404
+      : 200
 
     return res
       .status(statusCode)
