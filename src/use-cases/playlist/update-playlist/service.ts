@@ -25,9 +25,15 @@ const updatePlaylist = async (playlistOptions: playlistOptionsInterface): Promis
       return result
     }
 
-    description && playlist.set({ description })
-    name && playlist.set({ name })
-    isPrivate && playlist.set({ isPrivate })
+    const propertiesMatrix = Object.entries(playlistOptions)
+    propertiesMatrix.map(propValue => {
+      if (propValue[1] !== undefined && propValue[0] !== 'playlistId') {
+        const propValueJSON = `{"${propValue[0]}": "${propValue[1]}"}`
+
+        const propValueParsed = JSON.parse(propValueJSON)
+        playlist.set(propValueParsed)
+      }
+    })
 
     await playlist.save()
 
