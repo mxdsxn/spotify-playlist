@@ -18,19 +18,19 @@ describe('Login Use Case:', () => {
   })
 
   it('Login with all the correct parameters.', async () => {
-    const findOneSelectMocked = {
-      select: jest.fn().mockResolvedValue({
-        _id: '12r3tw14gt4ty5ewg0THJ',
-        __V: 0,
-        email: mockUser.email,
-        name: mockUser.name,
-        password: mockUser.password,
-        createdAt: new Date().toDateString(),
-        get: jest.fn().mockReturnValue('12r3tw14gt4ty5ewg0THJ'),
-      }),
+    const userDocumentMocked = {
+      _id: '12r3tw14gt4ty5ewg0THJ',
+      __V: 0,
+      email: mockUser.email,
+      name: mockUser.name,
+      password: mockUser.password,
+      createdAt: new Date().toDateString(),
+      get: jest.fn().mockReturnValue('12r3tw14gt4ty5ewg0THJ'),
     }
+    const findSelectMocked = { select: jest.fn().mockResolvedValue(userDocumentMocked) }
 
-    UserSchema.findOne = jest.fn().mockImplementation(() => findOneSelectMocked)
+    UserSchema.findOne = jest.fn().mockImplementation(() => findSelectMocked)
+    UserSchema.findById = jest.fn().mockImplementation(() => findSelectMocked)
     bcrypt.compare = jest.fn().mockResolvedValue(true)
 
     const result = await loginUser(mockUser)
