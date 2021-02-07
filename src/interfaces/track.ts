@@ -1,4 +1,5 @@
 export default interface trackInterface {
-  trackSpotifyId: string,
-  trackName: string,
+  spotifyId: string,
+  name: string,
+  artist: string
 }

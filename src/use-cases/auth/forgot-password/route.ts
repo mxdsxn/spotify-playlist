@@ -25,8 +25,8 @@ forgotPasswordRoute.post('/forgot-password', async (req, res) => {
     const result = await forgotPassword(req.body)
 
     const statusCode = result.hasError
-      ? 200
-      : 401
+      ? 401
+      : 200
 
     return res
       .status(statusCode)
