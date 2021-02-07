@@ -43,7 +43,6 @@ const updatePlaylist = async (playlistOptions: playlistOptionsInterface): Promis
     }
     return result
   } catch (error) {
-    console.log(error)
     const result: resultInterface = {
       hasError: true,
       message: 'Falha ao alterar a playlist.',
