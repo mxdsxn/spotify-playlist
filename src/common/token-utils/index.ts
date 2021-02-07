@@ -54,8 +54,10 @@ const verifyToken = (req: Request, res: Response, next: NextFunction): Response 
     if (decoded) {
       // eslint-disable-next-line no-param-reassign
       req.body.userId = decoded.id
+
+      const user = await UserSchema.findById(decoded.id).select('+spotifyToken')
       // eslint-disable-next-line no-param-reassign
-      req.body.spotifyToken = decoded.spotifyToken
+      req.body.spotifyToken = user && user.get('spotifyToken')
       return next()
     }
   })
