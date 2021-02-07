@@ -4,6 +4,7 @@ import { createPlaylistRoute } from './create-playlist'
 import { listPlaylistRoute } from './list-playlist'
 import { showPlaylistRoute } from './show-playlist'
 import { insertTrackPlaylistRoute } from './insert-track-playlist'
+import { removeTrackPlaylistRoute } from './remove-track-playlist'
 import { updatePlaylistRoute } from './update-playlist'
 import { deletePlaylistRoute } from './delete-playlist'
 
@@ -18,6 +19,7 @@ playlistRoute.use('/playlist',
   showPlaylistRoute,
   updatePlaylistRoute,
   insertTrackPlaylistRoute,
+  removeTrackPlaylistRoute,
   deletePlaylistRoute,
 )
 
