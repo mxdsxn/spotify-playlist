@@ -20,14 +20,12 @@ const removeTrackPlaylist = async (options: optionsInterface): Promise<resultInt
       return result
     }
 
-    // console.log(options)
     const oldTracks = playlist.get('tracks') as Array<trackInterface>
 
     const newTracks = oldTracks.filter(track => track.spotifyId !== options.trackSpotifyId)
     playlist.set({ tracks: newTracks })
 
-    console.log(playlist)
-    // await playlist.save()
+    await playlist.save()
 
     const result: resultInterface = {
       hasError: false,
