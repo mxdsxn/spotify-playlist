@@ -3,7 +3,7 @@ import { PlaylistSchema } from '@schemas'
 
 const showPlaylist = async (playlistId: string): Promise<resultInterface> => {
   try {
-    const playlist = await PlaylistSchema.findById(playlistId)
+    const playlist = await PlaylistSchema.findById(playlistId).populate('tracks')
 
     if (!playlist) {
       const result: resultInterface = {
