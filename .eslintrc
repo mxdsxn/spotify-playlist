@@ -45,9 +45,6 @@
         "FunctionExpression": {
           "parameters": "first"
         },
-        "CallExpression": {
-          "arguments": "first"
-        },
         "ArrayExpression": 1,
         "ObjectExpression": 1,
         "ImportDeclaration": 1,
