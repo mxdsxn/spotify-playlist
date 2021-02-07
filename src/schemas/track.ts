@@ -2,11 +2,16 @@ import mongoose from 'mongoose'
 import { TrackSchemaType } from '@types'
 
 const TrackSchema = new mongoose.Schema({
-  trackSpotifyId: {
+  spotifyId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  name: {
     type: String,
     required: true,
   },
-  trackName: {
+  artist: {
     type: String,
     required: true,
   },
