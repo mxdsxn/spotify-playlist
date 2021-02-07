@@ -3,12 +3,14 @@ import insertTrackPlaylist from './service'
 
 const insertTrackPlaylistRoute = express.Router()
 insertTrackPlaylistRoute.put('/:playlistId/:trackId', async (req, res) => {
+  const { spotifyToken } = req.body
+
   const {
     playlistId, trackId,
   } = req.params
 
   const playlistOptions = {
-    trackId, playlistId,
+    trackId, playlistId, spotifyToken,
   }
 
   try {
