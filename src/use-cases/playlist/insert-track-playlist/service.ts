@@ -8,7 +8,7 @@ import axios from 'axios'
 
 interface optionsInterface {
   spotifyToken: string,
-  trackId: string
+  spotifyId: string
   playlistId: string,
 }
 
@@ -25,7 +25,7 @@ const updatePlaylist = async (options: optionsInterface): Promise<resultInterfac
     }
 
     const oldTracks = playlist.get('tracks') as Array<trackInterface>
-    if (oldTracks.some(track => track.spotifyId === options.trackId)) {
+    if (oldTracks.some(track => track.spotifyId === options.spotifyId)) {
       const result: resultInterface = {
         hasError: true,
         message: 'Track já pertence à playlist.',
@@ -33,10 +33,10 @@ const updatePlaylist = async (options: optionsInterface): Promise<resultInterfac
       return result
     }
 
-    let track = await TrackSchema.findOne({ spotifyId: options.trackId })
+    let track = await TrackSchema.findOne({ spotifyId: options.spotifyId })
     if (!track) {
       const trackSpotify = await getTrack({
-        trackId: options.trackId,
+        spotifyId: options.spotifyId,
         spotifyToken: options.spotifyToken,
       })
 
@@ -78,11 +78,11 @@ interface trackSpotifyInterface {
 
 interface trackOptionsInterface {
   spotifyToken: string,
-  trackId: string
+  spotifyId: string
 }
 
 const getTrack = async (options: trackOptionsInterface): Promise<resultInterface> => {
-  const baseUrl = `https://api.spotify.com/v1/tracks/${options.trackId}`
+  const baseUrl = `https://api.spotify.com/v1/tracks/${options.spotifyId}`
 
   try {
     const track = await axios.get(baseUrl, { headers: { 'Authorization': `Bearer ${options.spotifyToken}` } })
