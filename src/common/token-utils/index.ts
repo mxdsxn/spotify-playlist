@@ -56,7 +56,6 @@ const verifyToken = (req: Request, res: Response, next: NextFunction): Response 
       req.body.userId = decoded.id
       // eslint-disable-next-line no-param-reassign
       req.body.spotifyToken = decoded.spotifyToken
-      console.log(req.body)
       return next()
     }
   })
