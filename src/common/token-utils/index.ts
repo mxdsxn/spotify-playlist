@@ -25,7 +25,7 @@ const setToken = async (id: string): Promise<string> => {
   })
 }
 
-const verifyToken = (req: Request, res: Response, next: NextFunction): Response | void => {
+const verifyToken = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
   const { authorization } = req.headers
   if (!authorization) {
     return res.status(401).json({ error: 'Não há token de autorização.' })
