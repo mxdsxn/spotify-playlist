@@ -1,16 +1,14 @@
-import express from 'express'
-
 import {
-  checkSchema,
-  validationResult,
-} from 'express-validator'
-
+  Response, Request, Router,
+} from 'express'
+import { checkSchema } from 'express-validator'
+import { validatorMiddleware } from '@common'
 import loginUser from './service'
 
-const validatorRoute = checkSchema({
+const validationRoute = checkSchema({
   email: {
     in: ['body'],
-    isEmail: true,
+    isString: true,
     notEmpty: true,
   },
   password: {
@@ -20,17 +18,8 @@ const validatorRoute = checkSchema({
   },
 })
 
-const loginRoute = express.Router()
-
-loginRoute.use(validatorRoute)
-
-loginRoute.post('/login', async (req, res) => {
-  const errors = validationResult(req)
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.mapped() })
-  }
-
+const loginRoute = Router()
+loginRoute.post('/login', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   try {
     const result = await loginUser(req.body)
 

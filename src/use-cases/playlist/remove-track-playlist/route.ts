@@ -1,8 +1,10 @@
-import express from 'express'
+import {
+  Response, Request, Router,
+} from 'express'
 import removeTrackPlaylist from './service'
 
-const removeTrackPlaylistRoute = express.Router()
-removeTrackPlaylistRoute.delete('/:playlistId/:trackSpotifyId', async (req, res) => {
+const removeTrackPlaylistRoute = Router()
+removeTrackPlaylistRoute.delete('/:playlistId/:trackSpotifyId', async (req: Request, res: Response) => {
   const {
     playlistId, trackSpotifyId,
   } = req.params

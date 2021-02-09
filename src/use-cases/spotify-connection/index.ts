@@ -1,13 +1,10 @@
-import express from 'express'
+import { Router } from 'express'
+import { verifyToken } from '@common'
 import { appAuthorizationRoute } from './app-authorization'
 import { userAuthenticationRoute } from './user-authentication'
 import { searchRoute } from './search'
-import { tokenUtils } from '@common'
 
-const { verifyToken } = tokenUtils
-
-const spotifyConnectionRoute = express.Router()
-
+const spotifyConnectionRoute = Router()
 spotifyConnectionRoute.use(verifyToken)
 spotifyConnectionRoute.use(
   '/spotify-connection',

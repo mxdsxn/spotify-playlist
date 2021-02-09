@@ -1,8 +1,10 @@
-import express from 'express'
+import {
+  Response, Request, Router,
+} from 'express'
 import deletePlaylist from './service'
 
-const deletePlaylistRoute = express.Router()
-deletePlaylistRoute.delete('/:playlistId', async (req, res) => {
+const deletePlaylistRoute = Router()
+deletePlaylistRoute.delete('/:playlistId', async (req: Request, res: Response) => {
   const { playlistId } = req.params
 
   try {

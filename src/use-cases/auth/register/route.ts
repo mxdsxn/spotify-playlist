@@ -1,21 +1,14 @@
-import express from 'express'
-
 import {
-  checkSchema,
-  validationResult,
-} from 'express-validator'
-
+  Response, Request, Router,
+} from 'express'
+import { checkSchema } from 'express-validator'
+import { validatorMiddleware } from '@common'
 import registerUser from './service'
 
-const validatorRoute = checkSchema({
-  name: {
-    in: ['body'],
-    isString: true,
-    notEmpty: true,
-  },
+const validationRoute = checkSchema({
   email: {
     in: ['body'],
-    isEmail: true,
+    isString: true,
     notEmpty: true,
   },
   password: {
@@ -23,18 +16,15 @@ const validatorRoute = checkSchema({
     isString: true,
     notEmpty: true,
   },
+  name: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true,
+  },
 })
 
-const registerRoute = express.Router()
-
-registerRoute.use(validatorRoute)
-
-registerRoute.post('/register', async (req, res) => {
-  const errors = validationResult(req)
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.mapped() })
-  }
+const registerRoute = Router()
+registerRoute.post('/register', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   try {
     const result = await registerUser(req.body)
 

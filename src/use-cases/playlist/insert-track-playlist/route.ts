@@ -1,8 +1,10 @@
-import express from 'express'
+import {
+  Response, Request, Router,
+} from 'express'
 import insertTrackPlaylist from './service'
 
-const insertTrackPlaylistRoute = express.Router()
-insertTrackPlaylistRoute.put('/:playlistId/:spotifyId', async (req, res) => {
+const insertTrackPlaylistRoute = Router()
+insertTrackPlaylistRoute.put('/:playlistId/:spotifyId', async (req: Request, res: Response) => {
   const { spotifyToken } = req.body
 
   const {

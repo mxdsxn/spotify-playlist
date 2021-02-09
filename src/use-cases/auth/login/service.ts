@@ -1,6 +1,5 @@
 import bcrypt from 'bcryptjs'
-
-import { tokenUtils } from '@common'
+import { setToken } from '@common'
 import {
   userInterface, resultInterface,
 } from '@interfaces'
@@ -10,10 +9,7 @@ interface loginResult extends resultInterface {
   resources?: { token: string }
 }
 
-const { setToken } = tokenUtils
-
 const loginUser = async (userToAuthenticate: userInterface): Promise<loginResult> => {
-
   try {
     const user = await UserSchema.findOne({ email: userToAuthenticate.email }).select('+password')
 

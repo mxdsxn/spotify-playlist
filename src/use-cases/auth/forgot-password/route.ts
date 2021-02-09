@@ -1,10 +1,9 @@
-import express from 'express'
 import {
-  checkSchema, validationResult,
-} from 'express-validator'
+  Response, Request, Router,
+} from 'express'
+import { checkSchema } from 'express-validator'
+import { validatorMiddleware } from '@common'
 import forgotPassword from './service'
-
-const forgotPasswordRoute = express.Router()
 
 const validationRoute = checkSchema({
   email: {
@@ -14,13 +13,8 @@ const validationRoute = checkSchema({
   },
 })
 
-forgotPasswordRoute.post('/forgot-password', async (req, res) => {
-  const errors = validationResult(validationRoute)
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.mapped() })
-  }
-
+const forgotPasswordRoute = Router()
+forgotPasswordRoute.post('/forgot-password', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   try {
     const result = await forgotPassword(req.body)
 

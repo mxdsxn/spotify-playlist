@@ -1,8 +1,33 @@
-import express from 'express'
+import {
+  Response, Request, Router,
+} from 'express'
+import { checkSchema } from 'express-validator'
+import { validatorMiddleware } from '@common'
 import updatePlaylist from './service'
 
-const updatePlaylistRoute = express.Router()
-updatePlaylistRoute.put('/:playlistId', async (req, res) => {
+const validationRoute = checkSchema({
+  name: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true,
+    optional: true,
+  },
+  description: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true,
+    optional: true,
+  },
+  isPrivate: {
+    in: ['body'],
+    isBoolean: true,
+    notEmpty: true,
+    optional: true,
+  },
+})
+
+const updatePlaylistRoute = Router()
+updatePlaylistRoute.put('/:playlistId', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   const {
     description, name, isPrivate,
   } = req.body
