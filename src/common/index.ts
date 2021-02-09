@@ -1,2 +1,4 @@
-export { default as tokenUtils } from './token-utils'
-export { validatorMiddleware } from './middlewares'
+export { setToken } from './token-utils'
+export {
+  validatorMiddleware, verifyToken,
+} from './middlewares'
