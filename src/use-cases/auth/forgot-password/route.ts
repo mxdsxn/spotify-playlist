@@ -1,8 +1,20 @@
-import { Router } from 'express'
+import {
+  Response, Request, Router,
+} from 'express'
+import { checkSchema } from 'express-validator'
+import { validatorMiddleware } from '@common'
 import forgotPassword from './service'
 
+const validationRoute = checkSchema({
+  email: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true,
+  },
+})
+
 const forgotPasswordRoute = Router()
-forgotPasswordRoute.post('/forgot-password', async (req, res) => {
+forgotPasswordRoute.post('/forgot-password', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   try {
     const result = await forgotPassword(req.body)
 

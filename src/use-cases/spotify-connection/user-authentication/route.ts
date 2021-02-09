@@ -1,10 +1,21 @@
-import express from 'express'
+import {
+  Response, Request, Router,
+} from 'express'
+import { checkSchema } from 'express-validator'
+import { validatorMiddleware } from '@common'
 import { UserSchema } from '@schemas'
 import spotifyService from './service'
 
-const userAuthenticationRoute = express.Router()
+const validationRoute = checkSchema({
+  code: {
+    in: ['query'],
+    isString: true,
+    notEmpty: true,
+  },
+})
 
-userAuthenticationRoute.get('/authentication-token', async (req, res) => {
+const userAuthenticationRoute = Router()
+userAuthenticationRoute.get('/authentication-token', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   try {
     const codeAuthorization = req.query.code as string
     const result = await spotifyService.getAppAuthenticationUrl(codeAuthorization)

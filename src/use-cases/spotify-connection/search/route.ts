@@ -1,9 +1,25 @@
-import express from 'express'
+import {
+  Response, Request, Router,
+} from 'express'
+import { checkSchema } from 'express-validator'
+import { validatorMiddleware } from '@common'
 import searchService from './service'
 
-const searchRoute = express.Router()
+const validationRoute = checkSchema({
+  q: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true,
+  },
+  type: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true,
+  },
+})
 
-searchRoute.get('/search', async (req, res) => {
+const searchRoute = Router()
+searchRoute.get('/search', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   const {
     spotifyToken, q, type,
   } = req.body

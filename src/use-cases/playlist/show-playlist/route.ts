@@ -1,8 +1,10 @@
-import express from 'express'
+import {
+  Response, Request, Router,
+} from 'express'
 import showPlaylist from './service'
 
-const listPlaylistRoute = express.Router()
-listPlaylistRoute.get('/:playlistId', async (req, res) => {
+const listPlaylistRoute = Router()
+listPlaylistRoute.get('/:playlistId', async (req: Request, res: Response) => {
   const { playlistId } = req.params
 
   try {

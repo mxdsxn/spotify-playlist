@@ -1,8 +1,10 @@
-import express from 'express'
+import {
+  Response, Request, Router,
+} from 'express'
 import showPlaylist from './service'
 
-const listPlaylistRoute = express.Router()
-listPlaylistRoute.get('/', async (req, res) => {
+const listPlaylistRoute = Router()
+listPlaylistRoute.get('/', async (req: Request, res: Response) => {
   const { userId } = req.body
 
   try {

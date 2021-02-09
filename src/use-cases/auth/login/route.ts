@@ -1,8 +1,25 @@
-import { Router } from 'express'
+import {
+  Response, Request, Router,
+} from 'express'
+import { checkSchema } from 'express-validator'
+import { validatorMiddleware } from '@common'
 import loginUser from './service'
 
+const validationRoute = checkSchema({
+  email: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true,
+  },
+  password: {
+    in: ['body'],
+    isString: true,
+    notEmpty: true,
+  },
+})
+
 const loginRoute = Router()
-loginRoute.post('/login', async (req, res) => {
+loginRoute.post('/login', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   try {
     const result = await loginUser(req.body)
 

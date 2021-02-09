@@ -1,9 +1,12 @@
-import express from 'express'
+import {
+  Response, Request, Router,
+} from 'express'
+import { checkSchema } from 'express-validator'
+import { validatorMiddleware } from '@common'
 import spotifyService from './service'
 
-const appAuthorizationRoute = express.Router()
-
-appAuthorizationRoute.get('/authorization-code', async (req, res) => {
+const appAuthorizationRoute = Router()
+appAuthorizationRoute.get('/authorization-code', async (_req, res) => {
   const result = await spotifyService.getAppAuthorizationUrl()
 
   if (result) {
@@ -14,7 +17,20 @@ appAuthorizationRoute.get('/authorization-code', async (req, res) => {
 
 })
 
-appAuthorizationRoute.get('/spotilist-callback-url', async (req, res) => {
+const validationRoute = checkSchema({
+  code: {
+    in: ['query'],
+    isString: true,
+    notEmpty: true,
+  },
+  state: {
+    in: ['query'],
+    isString: true,
+    notEmpty: true,
+  },
+})
+
+appAuthorizationRoute.get('/spotilist-callback-url', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   const { query } = req
   if (query.code) {
     const codeAuthorization = `?code=${encodeURIComponent(query.code as string)}`
