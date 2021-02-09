@@ -1,26 +1,8 @@
-import express from 'express'
-import {
-  checkSchema, validationResult,
-} from 'express-validator'
+import { Router } from 'express'
 import forgotPassword from './service'
 
-const forgotPasswordRoute = express.Router()
-
-const validationRoute = checkSchema({
-  email: {
-    in: ['body'],
-    isString: true,
-    notEmpty: true,
-  },
-})
-
+const forgotPasswordRoute = Router()
 forgotPasswordRoute.post('/forgot-password', async (req, res) => {
-  const errors = validationResult(validationRoute)
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.mapped() })
-  }
-
   try {
     const result = await forgotPassword(req.body)
 

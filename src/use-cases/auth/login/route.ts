@@ -1,36 +1,8 @@
-import express from 'express'
-
-import {
-  checkSchema,
-  validationResult,
-} from 'express-validator'
-
+import { Router } from 'express'
 import loginUser from './service'
 
-const validatorRoute = checkSchema({
-  email: {
-    in: ['body'],
-    isEmail: true,
-    notEmpty: true,
-  },
-  password: {
-    in: ['body'],
-    isString: true,
-    notEmpty: true,
-  },
-})
-
-const loginRoute = express.Router()
-
-loginRoute.use(validatorRoute)
-
+const loginRoute = Router()
 loginRoute.post('/login', async (req, res) => {
-  const errors = validationResult(req)
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.mapped() })
-  }
-
   try {
     const result = await loginUser(req.body)
 
