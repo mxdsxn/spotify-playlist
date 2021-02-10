@@ -27,10 +27,7 @@ const registerRoute = Router()
 registerRoute.post('/register', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   try {
     const result = await registerUser(req.body)
-
-    const statusCode = result.hasError
-      ? 409
-      : 201
+    const { statusCode } = result
 
     return res
       .status(statusCode)

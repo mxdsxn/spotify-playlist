@@ -27,10 +27,7 @@ const resetPasswordRoute = Router()
 resetPasswordRoute.post('/reset-password', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   try {
     const result = await resetPassword(req.body)
-
-    const statusCode = result.hasError
-      ? 404
-      : 201
+    const { statusCode } = result
 
     return res
       .status(statusCode)

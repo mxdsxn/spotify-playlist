@@ -1,42 +1,34 @@
+import { errorHandler } from '@common'
 import {
   userInterface, resultInterface,
 } from '@interfaces'
 import { UserSchema } from '@schemas'
-import { UserSchemaType } from '@types'
 
-interface registerResult extends resultInterface {
-  resources?: { user: UserSchemaType }
-}
-
-const registerUser = async (newUserData: userInterface): Promise<registerResult> => {
-
+const registerUser = async (userData: userInterface): Promise<resultInterface> => {
   try {
-    const checkExistUser = await UserSchema.exists({ email: newUserData.email })
+    const user = await UserSchema.exists({ email: userData.email })
 
-    if (checkExistUser) {
-      const result: registerResult = {
+    if (user) {
+      const result: resultInterface = {
         hasError: true,
-        message: 'Email já registrado.',
+        message: 'invalid email.',
+        statusCode: 409,
       }
       return result
     }
 
-    const newUser = await UserSchema.create(newUserData)
+    const newUser = await UserSchema.create(userData)
     newUser.set({ password: undefined })
 
-    const result: registerResult = {
+    const result: resultInterface = {
       hasError: false,
-      message: 'Registrado com sucesso.',
+      message: 'registered user.',
       resources: { user: newUser },
+      statusCode: 201,
     }
     return result
-
   } catch (error) {
-    const result: registerResult = {
-      hasError: true,
-      message: 'Erro ao cadastrar novo usuário',
-    }
-    return result
+    return await errorHandler(error)
   }
 }
 

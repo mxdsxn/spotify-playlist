@@ -17,10 +17,7 @@ const forgotPasswordRoute = Router()
 forgotPasswordRoute.post('/forgot-password', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   try {
     const result = await forgotPassword(req.body)
-
-    const statusCode = result.hasError
-      ? 401
-      : 200
+    const { statusCode } = result
 
     return res
       .status(statusCode)

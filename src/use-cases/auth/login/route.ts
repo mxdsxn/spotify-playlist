@@ -22,10 +22,7 @@ const loginRoute = Router()
 loginRoute.post('/login', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
   try {
     const result = await loginUser(req.body)
-
-    const statusCode = result.hasError
-      ? 401
-      : 200
+    const { statusCode } = result
 
     return res
       .status(statusCode)

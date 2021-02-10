@@ -1,62 +1,62 @@
+import { errorHandler } from '@common'
 import { resultInterface } from '@interfaces'
 import { UserSchema } from '@schemas'
 
-interface IResetPassword {
+interface resetCodeOptionsInterface {
   email: string,
   resetCode: string,
   newPassword: string,
 }
 
-const resetPassword = async (newUserData: IResetPassword): Promise<resultInterface> => {
-
+const resetPassword = async (resetCodeOptions: resetCodeOptionsInterface): Promise<resultInterface> => {
   try {
-    const checkExistUser = await UserSchema.findOne({ email: newUserData.email }).select('+passwordResetExpires passwordResetCode')
+    const user = await UserSchema.findOne({ email: resetCodeOptions.email })
+      .select('+passwordResetExpires passwordResetCode')
 
-    if (!checkExistUser) {
+    if (!user) {
       const result: resultInterface = {
-        message: 'Usuário não encontrado.',
+        message: 'user not found.',
         hasError: true,
+        statusCode: 404,
       }
       return result
     }
 
-    const userResetCode = checkExistUser.get('passwordResetCode')
-    const userResetCodeExpire = checkExistUser.get('passwordResetExpires')
+    const resetCode = user.get('passwordResetCode')
+    const resetCodeExpire = user.get('passwordResetExpires')
 
-    if (userResetCode !== newUserData.resetCode) {
+    if (resetCode !== resetCodeOptions.resetCode) {
       const result: resultInterface = {
-        message: 'Codigo inválido.',
+        message: 'invalid code.',
         hasError: true,
+        statusCode: 401,
       }
       return result
-    } else if (userResetCodeExpire < new Date().getTime()) {
+    }
+    if (resetCodeExpire < new Date().getTime()) {
       const result: resultInterface = {
-        message: 'Codigo expirado.',
+        message: 'expired code`.',
         hasError: true,
+        statusCode: 401,
       }
       return result
     }
 
-    checkExistUser.set({
-      password: newUserData.newPassword,
+    user.set({
+      password: resetCodeOptions.newPassword,
       passwordResetExpires: undefined,
       passwordResetCode: undefined,
     })
-
-    await checkExistUser.save()
+    await user.save()
 
     const result: resultInterface = {
-      message: 'Senha alterada com sucesso.',
+      message: 'password changed.',
       hasError: false,
+      statusCode: 200,
     }
     return result
-
   } catch (error) {
-    const result: resultInterface = {
-      message: 'Erro ao encontrar resetar senha do usuário',
-      hasError: true,
-    }
-    return result
+    return await errorHandler(error)
   }
 }
 
