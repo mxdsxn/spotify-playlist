@@ -38,9 +38,10 @@ describe('Login Use Case:', () => {
     expect(UserSchema.findOne).toHaveBeenCalledTimes(1)
     expect(bcrypt.compare).toHaveBeenCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'Usuário autenticado.',
+      message: 'authenticated user.',
       hasError: false,
       resources: expect.objectContaining({ token: expect.any(String) }),
+      statusCode: 200,
     }))
   })
 
@@ -53,8 +54,9 @@ describe('Login Use Case:', () => {
 
     expect(UserSchema.findOne).toHaveBeenCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'Usuário não encontrado.',
+      message: 'user not found.',
       hasError: true,
+      statusCode: 404,
     }))
   })
 
@@ -79,8 +81,9 @@ describe('Login Use Case:', () => {
     expect(UserSchema.findOne).toHaveBeenCalledTimes(1)
     expect(bcrypt.compare).toHaveBeenCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'Senha inválida.',
+      message: 'invalid password.',
       hasError: true,
+      statusCode: 401,
     }))
   })
 
@@ -105,8 +108,9 @@ describe('Login Use Case:', () => {
     expect(UserSchema.findOne).toHaveBeenCalledTimes(1)
     expect(bcrypt.compare).toHaveBeenCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'Erro ao autenticar o usuário',
+      message: 'service error.',
       hasError: true,
+      statusCode: 500,
     }))
   })
 })
