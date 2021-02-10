@@ -1,5 +1,5 @@
 import {
-  Response, Request, Router,
+  Response, Request, Router, NextFunction,
 } from 'express'
 import { checkSchema } from 'express-validator'
 import { validatorMiddleware } from '@common'
@@ -19,7 +19,7 @@ const validationRoute = checkSchema({
 })
 
 const loginRoute = Router()
-loginRoute.post('/login', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
+loginRoute.post('/login', validationRoute, validatorMiddleware, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await loginUser(req.body)
     const { statusCode } = result
@@ -28,12 +28,7 @@ loginRoute.post('/login', validationRoute, validatorMiddleware, async (req: Requ
       .status(statusCode)
       .json(result)
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        message: 'Erro em /login.',
-        error,
-      })
+    next(error)
   }
 })
 

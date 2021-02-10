@@ -1,5 +1,5 @@
 import {
-  Response, Request, Router,
+  Response, Request, Router, NextFunction,
 } from 'express'
 import { checkSchema } from 'express-validator'
 import { validatorMiddleware } from '@common'
@@ -24,7 +24,7 @@ const validationRoute = checkSchema({
 })
 
 const resetPasswordRoute = Router()
-resetPasswordRoute.post('/reset-password', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
+resetPasswordRoute.post('/reset-password', validationRoute, validatorMiddleware, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await resetPassword(req.body)
     const { statusCode } = result
@@ -33,12 +33,7 @@ resetPasswordRoute.post('/reset-password', validationRoute, validatorMiddleware,
       .status(statusCode)
       .json(result)
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        message: 'Erro em /reset_password.',
-        error,
-      })
+    next(error)
   }
 })
 
