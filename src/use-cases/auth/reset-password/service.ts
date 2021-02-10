@@ -35,7 +35,7 @@ const resetPassword = async (resetCodeOptions: resetCodeOptionsInterface): Promi
     }
     if (resetCodeExpire < new Date().getTime()) {
       const result: resultInterface = {
-        message: 'expired code`.',
+        message: 'expired code.',
         hasError: true,
         statusCode: 401,
       }

@@ -35,9 +35,10 @@ describe('Forgot Password Use Case:', () => {
     expect(cryptoRandomBytesSpy).toBeCalledTimes(1)
     expect(UserSchema.findByIdAndUpdate).toBeCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'Codigo para reset de senha gerado com sucesso.',
+      message: 'reset code.',
       hasError: false,
       resources: { resetCode: expect.any(String) },
+      statusCode: 200,
     }))
   })
 
@@ -48,8 +49,9 @@ describe('Forgot Password Use Case:', () => {
 
     expect(UserSchema.findOne).toBeCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'Usuário não encontrado.',
+      message: 'user not found.',
       hasError: true,
+      statusCode: 404,
     }))
   })
 
@@ -60,8 +62,9 @@ describe('Forgot Password Use Case:', () => {
 
     expect(UserSchema.findOne).toBeCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'Erro ao gerar codigo para reset senha do usuário',
+      message: 'service error.',
       hasError: true,
+      statusCode: 500,
     }))
   })
 })
