@@ -38,11 +38,7 @@ describe('Reset Password Use Case:', () => {
     expect(selectMocked.get).toBeCalledTimes(2)
     expect(selectMocked.set).toBeCalledTimes(1)
     expect(selectMocked.save).toBeCalledTimes(1)
-    expect(result).toEqual(expect.objectContaining({
-      message: 'password changed.',
-      hasError: false,
-      statusCode: 200,
-    }))
+    expect(result).toEqual(expect.objectContaining({ statusCode: 200 }))
   })
 
   it('Reset password with incorrect email.', async () => {
@@ -123,7 +119,7 @@ describe('Reset Password Use Case:', () => {
 
     expect(UserSchema.findOne).toBeCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'service error.',
+      message: 'reset password error.',
       hasError: true,
       statusCode: 500,
     }))
