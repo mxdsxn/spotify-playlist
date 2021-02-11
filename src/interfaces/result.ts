@@ -1,5 +1,5 @@
 export default interface resultInterface {
-  hasError: boolean,
+  hasError?: boolean,
   message?: string,
   resources?: unknown,
   statusCode: number,
