@@ -1,11 +1,10 @@
-import express from 'express'
-
+import { Router } from 'express'
 import { forgotPasswordRoute } from './forgot-password'
 import { loginRoute } from './login'
 import { registerRoute } from './register'
 import { resetPasswordRoute } from './reset-password'
 
-const authRoute = express.Router()
+const authRoute = Router()
 
 authRoute.use('/auth',
   forgotPasswordRoute,
