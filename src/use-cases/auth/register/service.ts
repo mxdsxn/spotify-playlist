@@ -21,14 +21,12 @@ const registerUser = async (userData: userInterface): Promise<resultInterface> =
     newUser.set({ password: undefined })
 
     const result: resultInterface = {
-      hasError: false,
-      message: 'registered user.',
       resources: { user: newUser },
       statusCode: 201,
     }
     return result
   } catch (error) {
-    return await errorHandler(error)
+    return await errorHandler(error, 'register user error.')
   }
 }
 

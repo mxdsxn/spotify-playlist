@@ -37,8 +37,6 @@ describe('Register Use Case:', () => {
     expect(mockUserSchemaCreate.set).toHaveBeenCalledTimes(1)
 
     expect(result).toEqual(expect.objectContaining({
-      hasError: false,
-      message: 'registered user.',
       resources: { user: expect.any(Object) },
       statusCode: 201,
     }))
@@ -67,7 +65,7 @@ describe('Register Use Case:', () => {
     expect(UserSchema.create).toHaveBeenCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
       hasError: true,
-      message: 'service error.',
+      message: 'register user error.',
       statusCode: 500,
     }))
   })
