@@ -3,10 +3,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { resultInterface } from '@interfaces'
 
-const errorHandler = async (_error: any): Promise<resultInterface> => {
+const errorHandler = async (_error: any, message?: string, service?: string): Promise<resultInterface> => {
   const result: resultInterface = {
     hasError: true,
-    message: 'service error.',
+    message: message || 'service error.',
     statusCode: 500,
   }
   return result
