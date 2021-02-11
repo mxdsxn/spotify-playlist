@@ -1,8 +1,11 @@
 import {
+  NextFunction,
   Response, Request, Router,
 } from 'express'
 import { checkSchema } from 'express-validator'
-import { validatorMiddleware } from '@common'
+import {
+  responseHandler, validatorMiddleware,
+} from '@common'
 import searchService from './service'
 
 const validationRoute = checkSchema({
@@ -19,23 +22,22 @@ const validationRoute = checkSchema({
 })
 
 const searchRoute = Router()
-searchRoute.get('/search', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
-  const {
-    spotifyToken, q, type,
-  } = req.body
+searchRoute.get('/search', validationRoute, validatorMiddleware, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const {
+      spotifyToken, q, type,
+    } = req.body
 
-  const searchOptions = {
-    token: spotifyToken, q, type,
+    const searchOptions = {
+      token: spotifyToken, q, type,
+    }
+
+    const result = await searchService(searchOptions)
+
+    return await responseHandler(res, result)
+  } catch (error) {
+    next(error)
   }
-
-  const result = await searchService(searchOptions)
-
-  if (result) {
-    return res.status(200).json(result)
-
-  }
-  return res.status(400).json({ result })
-
 })
 
 export default searchRoute

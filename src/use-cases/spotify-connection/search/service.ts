@@ -1,3 +1,4 @@
+import { errorHandler } from '@common'
 import { resultInterface } from '@interfaces'
 import axios from 'axios'
 import queryString from 'query-string'
@@ -8,29 +9,29 @@ interface optionsInterface {
   type: string
 }
 
-const searchService = async (options: optionsInterface): Promise<resultInterface | any> => {
-  const baseUrl = 'https://api.spotify.com/v1/search'
-
+const BASE_URL = 'https://api.spotify.com/v1/search'
+const searchService = async (options: optionsInterface): Promise<resultInterface> => {
   const {
     q, type, token,
   } = options
 
   const searchUrl = queryString.stringifyUrl({
-    url: baseUrl,
+    url: BASE_URL,
     query: {
       q, type,
     },
   })
 
   try {
-    const result = await axios.get(searchUrl, { headers: { 'Authorization': `Bearer ${token}` } })
-    return result.data
-  } catch (error) {
+    const searchResult = await axios.get(searchUrl, { headers: { 'Authorization': `Bearer ${token}` } })
     const result: resultInterface = {
-      message: 'Falha ao buscar itens.',
-      hasError: true,
+      resources: searchResult.data,
+      statusCode: searchResult.status,
     }
+
     return result
+  } catch (error) {
+    return await errorHandler(error)
   }
 }
 
