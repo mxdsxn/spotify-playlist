@@ -31,7 +31,7 @@ const searchService = async (options: optionsInterface): Promise<resultInterface
 
     return result
   } catch (error) {
-    return await errorHandler(error, 'spotify search items')
+    return await errorHandler(error, 'spotify search items error')
   }
 }
 

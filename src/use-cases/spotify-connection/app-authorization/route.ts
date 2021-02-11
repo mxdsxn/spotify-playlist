@@ -1,20 +1,21 @@
 import {
-  Response, Request, Router,
+  Response, Request, Router, NextFunction,
 } from 'express'
 import { checkSchema } from 'express-validator'
-import { validatorMiddleware } from '@common'
+import {
+  responseHandler, validatorMiddleware,
+} from '@common'
 import spotifyService from './service'
 
 const appAuthorizationRoute = Router()
-appAuthorizationRoute.get('/authorization-code', async (_req, res) => {
-  const result = await spotifyService.getAppAuthorizationUrl()
+appAuthorizationRoute.get('/authorization-code', async (_req, res, next) => {
+  try {
+    const result = await spotifyService.getAppAuthorizationUrl()
 
-  if (result) {
-    return res.redirect(200, result)
-
+    return await responseHandler(res, result)
+  } catch (error) {
+    next(error)
   }
-  return res.status(400).json({ result })
-
 })
 
 const validationRoute = checkSchema({
@@ -30,15 +31,13 @@ const validationRoute = checkSchema({
   },
 })
 
-appAuthorizationRoute.get('/spotilist-callback-url', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
-  const { query } = req
-  if (query.code) {
+appAuthorizationRoute.get('/spotilist-callback-url', validationRoute, validatorMiddleware, async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { query } = req
     const codeAuthorization = `?code=${encodeURIComponent(query.code as string)}`
     return res.redirect(200, '/spotify-connection/authentication-token' + codeAuthorization)
-
-  } else if (query.error) {
-    return res.status(400).json({ error: query.error })
-
+  } catch (error) {
+    next(error)
   }
 })
 
