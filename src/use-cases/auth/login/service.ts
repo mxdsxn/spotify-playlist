@@ -33,14 +33,12 @@ const loginUser = async (userData: userInterface): Promise<resultInterface> => {
     const token = await setToken(user.get('id'))
 
     const result: resultInterface = {
-      message: 'authenticated user.',
-      hasError: false,
       resources: { token },
       statusCode: 200,
     }
     return result
   } catch (error) {
-    return await errorHandler(error)
+    return await errorHandler(error, 'login error.')
   }
 }
 
