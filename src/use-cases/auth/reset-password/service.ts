@@ -15,8 +15,8 @@ const resetPassword = async (resetCodeOptions: resetCodeOptionsInterface): Promi
 
     if (!user) {
       const result: resultInterface = {
-        message: 'user not found.',
         hasError: true,
+        message: 'user not found.',
         statusCode: 404,
       }
       return result
@@ -27,16 +27,16 @@ const resetPassword = async (resetCodeOptions: resetCodeOptionsInterface): Promi
 
     if (resetCode !== resetCodeOptions.resetCode) {
       const result: resultInterface = {
-        message: 'invalid code.',
         hasError: true,
+        message: 'invalid code.',
         statusCode: 401,
       }
       return result
     }
     if (resetCodeExpire < new Date().getTime()) {
       const result: resultInterface = {
-        message: 'expired code.',
         hasError: true,
+        message: 'expired code.',
         statusCode: 401,
       }
       return result
@@ -49,14 +49,10 @@ const resetPassword = async (resetCodeOptions: resetCodeOptionsInterface): Promi
     })
     await user.save()
 
-    const result: resultInterface = {
-      message: 'password changed.',
-      hasError: false,
-      statusCode: 200,
-    }
+    const result: resultInterface = { statusCode: 200 }
     return result
   } catch (error) {
-    return await errorHandler(error)
+    return await errorHandler(error, 'reset password error.')
   }
 }
 
