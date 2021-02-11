@@ -28,14 +28,12 @@ const forgotPassword = async (newUserData: userInterface): Promise<resultInterfa
     })
 
     const result: resultInterface = {
-      message: 'reset code.',
-      hasError: false,
       resources: { resetCode },
       statusCode: 200,
     }
     return result
   } catch (error) {
-    return await errorHandler(error)
+    return await errorHandler(error, 'forgot password error.')
   }
 }
 

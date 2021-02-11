@@ -35,8 +35,6 @@ describe('Forgot Password Use Case:', () => {
     expect(cryptoRandomBytesSpy).toBeCalledTimes(1)
     expect(UserSchema.findByIdAndUpdate).toBeCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'reset code.',
-      hasError: false,
       resources: { resetCode: expect.any(String) },
       statusCode: 200,
     }))
@@ -62,7 +60,7 @@ describe('Forgot Password Use Case:', () => {
 
     expect(UserSchema.findOne).toBeCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'service error.',
+      message: 'forgot password error.',
       hasError: true,
       statusCode: 500,
     }))
