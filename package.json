@@ -1,5 +1,5 @@
 {
-  "name": "Spotilist",
+  "name": "spotilist",
   "version": "0.7.5",
   "description": "Playlist maker based in spotify api",
   "main": "index.js",
