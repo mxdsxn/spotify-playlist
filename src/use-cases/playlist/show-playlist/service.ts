@@ -1,3 +1,4 @@
+import { errorHandler } from '@common'
 import { resultInterface } from '@interfaces'
 import { PlaylistSchema } from '@schemas'
 
@@ -8,23 +9,19 @@ const showPlaylist = async (playlistId: string): Promise<resultInterface> => {
     if (!playlist) {
       const result: resultInterface = {
         hasError: true,
-        message: 'Playlist não encontrada.',
+        statusCode: 404,
+        message: 'playlist not found.',
       }
       return result
     }
 
     const result: resultInterface = {
-      hasError: false,
-      message: 'Consulta de uma playlist.',
       resources: playlist,
+      statusCode: 200,
     }
     return result
   } catch (error) {
-    const result: resultInterface = {
-      hasError: true,
-      message: 'Falha ao buscar uma playlist.',
-    }
-    return result
+    return await errorHandler(error, 'show playlist error.')
   }
 }
 export default showPlaylist

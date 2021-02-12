@@ -1,8 +1,10 @@
 import {
-  Response, Request, Router,
+  Response, Request, Router, NextFunction,
 } from 'express'
 import { checkSchema } from 'express-validator'
-import { validatorMiddleware } from '@common'
+import {
+  responseHandler, validatorMiddleware,
+} from '@common'
 import registerUser from './service'
 
 const validationRoute = checkSchema({
@@ -24,24 +26,13 @@ const validationRoute = checkSchema({
 })
 
 const registerRoute = Router()
-registerRoute.post('/register', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
+registerRoute.post('/register', validationRoute, validatorMiddleware, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const result = await registerUser(req.body)
 
-    const statusCode = result.hasError
-      ? 409
-      : 201
-
-    return res
-      .status(statusCode)
-      .json(result)
+    return await responseHandler(res, result)
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        message: 'Erro em /register.',
-        error,
-      })
+    next(error)
   }
 })
 

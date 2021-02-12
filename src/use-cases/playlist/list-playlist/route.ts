@@ -1,28 +1,19 @@
+import { responseHandler } from '@common'
 import {
-  Response, Request, Router,
+  Response, Request, Router, NextFunction,
 } from 'express'
 import showPlaylist from './service'
 
 const listPlaylistRoute = Router()
-listPlaylistRoute.get('/', async (req: Request, res: Response) => {
+listPlaylistRoute.get('/', async (req: Request, res: Response, next: NextFunction) => {
   const { userId } = req.body
 
   try {
     const result = await showPlaylist(userId)
-    const statusCode = result.hasError
-      ? 409
-      : 201
 
-    return res
-      .status(statusCode)
-      .json(result)
+    await responseHandler(res, result)
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        message: `Erro em ${req.originalUrl}`,
-        error,
-      })
+    next(error)
   }
 })
 

@@ -1,3 +1,4 @@
+import { errorHandler } from '@common'
 import {
   resultInterface, trackInterface,
 } from '@interfaces'
@@ -15,7 +16,8 @@ const removeTrackPlaylist = async (options: optionsInterface): Promise<resultInt
     if (!playlist) {
       const result: resultInterface = {
         hasError: true,
-        message: 'Playlist não encontrada.',
+        statusCode: 404,
+        message: 'playlist not found.',
       }
       return result
     }
@@ -27,17 +29,10 @@ const removeTrackPlaylist = async (options: optionsInterface): Promise<resultInt
 
     await playlist.save()
 
-    const result: resultInterface = {
-      hasError: false,
-      message: 'Playlist alterada com sucesso.',
-    }
+    const result: resultInterface = { statusCode: 200 }
     return result
   } catch (error) {
-    const result: resultInterface = {
-      hasError: true,
-      message: 'Falha ao adicionar track a playlist.',
-    }
-    return result
+    return await errorHandler(error, 'remove track playlist error.')
   }
 }
 export default removeTrackPlaylist

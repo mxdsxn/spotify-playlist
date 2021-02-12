@@ -1,51 +1,44 @@
 import bcrypt from 'bcryptjs'
-import { setToken } from '@common'
+import {
+  errorHandler, setToken,
+} from '@common'
 import {
   userInterface, resultInterface,
 } from '@interfaces'
 import { UserSchema } from '@schemas'
 
-interface loginResult extends resultInterface {
-  resources?: { token: string }
-}
-
-const loginUser = async (userToAuthenticate: userInterface): Promise<loginResult> => {
+const loginUser = async (userData: userInterface): Promise<resultInterface> => {
   try {
-    const user = await UserSchema.findOne({ email: userToAuthenticate.email }).select('+password')
+    const user = await UserSchema.findOne({ email: userData.email }).select('+password')
 
     if (!user) {
-      const result: loginResult = {
-        message: 'Usuário não encontrado.',
+      const result: resultInterface = {
+        message: 'user not found.',
         hasError: true,
+        statusCode: 404,
       }
       return result
     }
 
-    const isValidPassword = await bcrypt.compare(userToAuthenticate.password, user.password)
-
+    const isValidPassword = await bcrypt.compare(userData.password, user.password)
     if (!isValidPassword) {
-      const result: loginResult = {
-        message: 'Senha inválida.',
+      const result: resultInterface = {
+        message: 'invalid password.',
         hasError: true,
+        statusCode: 401,
       }
       return result
     }
 
     const token = await setToken(user.get('id'))
 
-    const result: loginResult = {
-      message: 'Usuário autenticado.',
-      hasError: false,
+    const result: resultInterface = {
       resources: { token },
+      statusCode: 200,
     }
     return result
-
   } catch (error) {
-    const result: loginResult = {
-      message: 'Erro ao autenticar o usuário',
-      hasError: true,
-    }
-    return result
+    return await errorHandler(error, 'login error.')
   }
 }
 

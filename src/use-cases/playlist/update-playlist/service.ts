@@ -1,3 +1,4 @@
+import { errorHandler } from '@common'
 import { resultInterface } from '@interfaces'
 import { PlaylistSchema } from '@schemas'
 
@@ -20,7 +21,8 @@ const updatePlaylist = async (playlistOptions: playlistOptionsInterface): Promis
     if (!playlist) {
       const result: resultInterface = {
         hasError: true,
-        message: 'Playlist não encontrada.',
+        message: 'playlist not found.',
+        statusCode: 404,
       }
       return result
     }
@@ -37,17 +39,11 @@ const updatePlaylist = async (playlistOptions: playlistOptionsInterface): Promis
 
     await playlist.save()
 
-    const result: resultInterface = {
-      hasError: false,
-      message: 'Playlist alterada com sucesso.',
-    }
+    const result: resultInterface = { statusCode: 200 }
+
     return result
   } catch (error) {
-    const result: resultInterface = {
-      hasError: true,
-      message: 'Falha ao alterar a playlist.',
-    }
-    return result
+    return await errorHandler(error, 'update playlist error.')
   }
 }
 export default updatePlaylist

@@ -38,10 +38,7 @@ describe('Reset Password Use Case:', () => {
     expect(selectMocked.get).toBeCalledTimes(2)
     expect(selectMocked.set).toBeCalledTimes(1)
     expect(selectMocked.save).toBeCalledTimes(1)
-    expect(result).toEqual(expect.objectContaining({
-      message: 'Senha alterada com sucesso.',
-      hasError: false,
-    }))
+    expect(result).toEqual(expect.objectContaining({ statusCode: 200 }))
   })
 
   it('Reset password with incorrect email.', async () => {
@@ -52,8 +49,9 @@ describe('Reset Password Use Case:', () => {
 
     expect(UserSchema.findOne).toBeCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'Usuário não encontrado.',
+      message: 'user not found.',
       hasError: true,
+      statusCode: 404,
     }))
   })
 
@@ -79,8 +77,9 @@ describe('Reset Password Use Case:', () => {
     expect(UserSchema.findOne).toBeCalledTimes(1)
     expect(selectMocked.get).toBeCalledTimes(2)
     expect(result).toEqual(expect.objectContaining({
-      message: 'Codigo inválido.',
+      message: 'invalid code.',
       hasError: true,
+      statusCode: 401,
     }))
   })
 
@@ -106,8 +105,9 @@ describe('Reset Password Use Case:', () => {
     expect(UserSchema.findOne).toBeCalledTimes(1)
     expect(selectMocked.get).toBeCalledTimes(2)
     expect(result).toEqual(expect.objectContaining({
-      message: 'Codigo expirado.',
+      message: 'expired code.',
       hasError: true,
+      statusCode: 401,
     }))
   })
 
@@ -119,8 +119,9 @@ describe('Reset Password Use Case:', () => {
 
     expect(UserSchema.findOne).toBeCalledTimes(1)
     expect(result).toEqual(expect.objectContaining({
-      message: 'Erro ao encontrar resetar senha do usuário',
+      message: 'reset password error.',
       hasError: true,
+      statusCode: 500,
     }))
   })
 })

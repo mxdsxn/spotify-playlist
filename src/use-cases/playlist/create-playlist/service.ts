@@ -1,3 +1,4 @@
+import { errorHandler } from '@common'
 import {
   resultInterface, playlistInterface,
 } from '@interfaces'
@@ -7,17 +8,10 @@ const createPlaylist = async (playlistOptions: playlistInterface): Promise<resul
   try {
     await PlaylistSchema.create(playlistOptions)
 
-    const result: resultInterface = {
-      hasError: false,
-      message: `${playlistOptions.name} criada com sucesso.`,
-    }
+    const result: resultInterface = { statusCode: 201 }
     return result
   } catch (error) {
-    const result: resultInterface = {
-      hasError: true,
-      message: 'Falha ao buscar todas as playlists.',
-    }
-    return result
+    return await errorHandler(error, 'create playlist error.')
   }
 }
 export default createPlaylist
