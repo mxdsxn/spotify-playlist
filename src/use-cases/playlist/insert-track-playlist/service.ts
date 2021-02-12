@@ -1,3 +1,4 @@
+import { errorHandler } from '@common'
 import {
   resultInterface, trackInterface,
 } from '@interfaces'
@@ -19,7 +20,8 @@ const updatePlaylist = async (options: optionsInterface): Promise<resultInterfac
     if (!playlist) {
       const result: resultInterface = {
         hasError: true,
-        message: 'Playlist não encontrada.',
+        statusCode: 404,
+        message: 'playlist not found.',
       }
       return result
     }
@@ -28,19 +30,22 @@ const updatePlaylist = async (options: optionsInterface): Promise<resultInterfac
     if (oldTracks.some(track => track.spotifyId === options.spotifyId)) {
       const result: resultInterface = {
         hasError: true,
-        message: 'Track já pertence à playlist.',
+        statusCode: 409,
+        message: 'track already exists in playlist.',
       }
       return result
     }
 
     let track = await TrackSchema.findOne({ spotifyId: options.spotifyId })
     if (!track) {
-      const trackSpotify = await getTrack({
+      const trackSpotifyResponse = await getTrack({
         spotifyId: options.spotifyId,
         spotifyToken: options.spotifyToken,
       })
 
-      const { resources } = <{ resources: trackSpotifyInterface }>trackSpotify
+      if (trackSpotifyResponse.hasError) { return trackSpotifyResponse }
+
+      const { resources } = <{ resources: trackSpotifyInterface }>trackSpotifyResponse
 
       track = await TrackSchema.create({
         name: resources.name, spotifyId: resources.id, artist: resources.artists[0].name,
@@ -52,17 +57,10 @@ const updatePlaylist = async (options: optionsInterface): Promise<resultInterfac
 
     await playlist.save()
 
-    const result: resultInterface = {
-      hasError: false,
-      message: 'Playlist alterada com sucesso.',
-    }
+    const result: resultInterface = { statusCode: 200 }
     return result
   } catch (error) {
-    const result: resultInterface = {
-      hasError: true,
-      message: 'Falha ao adicionar track a playlist.',
-    }
-    return result
+    return await errorHandler(error, 'insert track playlist error.')
   }
 }
 export default updatePlaylist
@@ -88,16 +86,12 @@ const getTrack = async (options: trackOptionsInterface): Promise<resultInterface
     const track = await axios.get(baseUrl, { headers: { 'Authorization': `Bearer ${options.spotifyToken}` } })
 
     const result: resultInterface = {
-      hasError: false,
+      statusCode: 200,
       resources: track.data,
     }
 
     return result
   } catch (error) {
-    const result: resultInterface = {
-      message: 'Falha ao buscar track.',
-      hasError: true,
-    }
-    return result
+    return await errorHandler(error, 'get track spotify error.')
   }
 }

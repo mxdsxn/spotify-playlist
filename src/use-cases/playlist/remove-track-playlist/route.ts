@@ -1,10 +1,11 @@
+import { responseHandler } from '@common'
 import {
-  Response, Request, Router,
+  Response, Request, Router, NextFunction,
 } from 'express'
 import removeTrackPlaylist from './service'
 
 const removeTrackPlaylistRoute = Router()
-removeTrackPlaylistRoute.delete('/:playlistId/:trackSpotifyId', async (req: Request, res: Response) => {
+removeTrackPlaylistRoute.delete('/:playlistId/:trackSpotifyId', async (req: Request, res: Response, next: NextFunction) => {
   const {
     playlistId, trackSpotifyId,
   } = req.params
@@ -15,20 +16,10 @@ removeTrackPlaylistRoute.delete('/:playlistId/:trackSpotifyId', async (req: Requ
 
   try {
     const result = await removeTrackPlaylist(playlistOptions)
-    const statusCode = result.hasError
-      ? 404
-      : 201
 
-    return res
-      .status(statusCode)
-      .json(result)
+    await responseHandler(res, result)
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        message: `Erro em ${req.originalUrl}`,
-        error,
-      })
+    next(error)
   }
 })
 

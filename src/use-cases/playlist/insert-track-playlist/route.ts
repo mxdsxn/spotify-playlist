@@ -1,10 +1,11 @@
+import { responseHandler } from '@common'
 import {
-  Response, Request, Router,
+  Response, Request, Router, NextFunction,
 } from 'express'
 import insertTrackPlaylist from './service'
 
 const insertTrackPlaylistRoute = Router()
-insertTrackPlaylistRoute.put('/:playlistId/:spotifyId', async (req: Request, res: Response) => {
+insertTrackPlaylistRoute.put('/:playlistId/:spotifyId', async (req: Request, res: Response, next: NextFunction) => {
   const { spotifyToken } = req.body
 
   const {
@@ -17,20 +18,10 @@ insertTrackPlaylistRoute.put('/:playlistId/:spotifyId', async (req: Request, res
 
   try {
     const result = await insertTrackPlaylist(playlistOptions)
-    const statusCode = result.hasError
-      ? 404
-      : 201
 
-    return res
-      .status(statusCode)
-      .json(result)
+    await responseHandler(res, result)
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        message: `Erro em ${req.originalUrl}`,
-        error,
-      })
+    next(error)
   }
 })
 

@@ -1,8 +1,10 @@
 import {
-  Response, Request, Router,
+  Response, Request, Router, NextFunction,
 } from 'express'
 import { checkSchema } from 'express-validator'
-import { validatorMiddleware } from '@common'
+import {
+  responseHandler, validatorMiddleware,
+} from '@common'
 import createPlaylist from './service'
 
 const validationRoute = checkSchema({
@@ -24,7 +26,7 @@ const validationRoute = checkSchema({
 })
 
 const createPlaylistRoute = Router()
-createPlaylistRoute.post('/', validationRoute, validatorMiddleware, async (req: Request, res: Response) => {
+createPlaylistRoute.post('/', validationRoute, validatorMiddleware, async (req: Request, res: Response, next: NextFunction) => {
   const {
     description, name, isPrivate, userId,
   } = req.body
@@ -35,20 +37,10 @@ createPlaylistRoute.post('/', validationRoute, validatorMiddleware, async (req: 
 
   try {
     const result = await createPlaylist(playlistOptions)
-    const statusCode = result.hasError
-      ? 404
-      : 200
 
-    return res
-      .status(statusCode)
-      .json(result)
+    await responseHandler(res, result)
   } catch (error) {
-    return res
-      .status(400)
-      .json({
-        message: `Erro em ${req.originalUrl}`,
-        error,
-      })
+    next(error)
   }
 })
 
