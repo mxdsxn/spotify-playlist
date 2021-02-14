@@ -2,16 +2,14 @@ import queryString from 'query-string'
 import getAppAuthorizationUrl from '../service'
 
 jest.setTimeout(30000000)
-jest.mock('query-string')
 
 describe('App authorization', () => {
-  afterEach(async () => { jest.clearAllMocks() })
+  beforeEach(async () => { jest.clearAllMocks() })
 
   it('Get a url authorization.', async () => {
     const appUrlAuthorization = await getAppAuthorizationUrl()
 
     const parsedUrl = queryString.parseUrl(appUrlAuthorization.resources)
-    console.log(appUrlAuthorization)
 
     expect(appUrlAuthorization.statusCode).toEqual(200)
     expect(parsedUrl).toEqual(expect.objectContaining({
@@ -26,7 +24,8 @@ describe('App authorization', () => {
     }))
   })
 
-  it.only('Get app authorization url error.', async () => {
+  it('Get app authorization url error.', async () => {
+    jest.mock('query-string')
     queryString.stringifyUrl = jest.fn().mockImplementationOnce(() => {
       throw new Error('Error Test')
     })
