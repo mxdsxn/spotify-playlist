@@ -1,1 +1,1 @@
-{"mongoUri":"mongodb://127.0.0.1:55461/spotify-playlist-test-db?","mongoDBName":"spotify-playlist-test-db"}
+{"mongoUri":"mongodb://127.0.0.1:56080/spotilist-jest?","mongoDBName":"spotilist-jest"}
