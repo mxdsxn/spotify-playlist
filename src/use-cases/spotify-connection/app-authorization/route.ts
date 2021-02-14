@@ -5,12 +5,12 @@ import { checkSchema } from 'express-validator'
 import {
   responseHandler, validatorMiddleware,
 } from '@common'
-import spotifyService from './service'
+import getAppAuthorizationUrl from './service'
 
 const appAuthorizationRoute = Router()
 appAuthorizationRoute.get('/authorization-code', async (_req, res, next) => {
   try {
-    const result = await spotifyService.getAppAuthorizationUrl()
+    const result = await getAppAuthorizationUrl()
 
     return await responseHandler(res, result)
   } catch (error) {
