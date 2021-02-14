@@ -11,9 +11,6 @@ const {
 const SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token'
 
 const setUserAuthenticationToken = async (userId: string, codeAuthorization: string): Promise<resultInterface> => {
-  console.log({
-    userId, codeAuthorization,
-  })
   const bodyParams = {
     client_id: SPOTIFY_CLIENT_ID,
     client_secret: SPOTIFY_CLIENT_SECRET,
@@ -26,14 +23,12 @@ const setUserAuthenticationToken = async (userId: string, codeAuthorization: str
     const getTokenResult = await axios.post(SPOTIFY_TOKEN_URL, null, { params: bodyParams })
 
     const { data: { access_token } } = getTokenResult
-    console.log({ access_token })
+
     await UserSchema.findByIdAndUpdate(userId, { spotifyToken: access_token })
 
     const result: resultInterface = { statusCode: 200 }
     return result
   } catch (error) {
-    console.log({ error })
-
     return await errorHandler(error, 'spotify token error.')
   }
 }
