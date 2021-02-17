@@ -2,7 +2,7 @@ import mongoConnection from '../../../../database'
 import { PlaylistSchema } from '@schemas'
 import createPlaylist from '../service'
 
-// jest.setTimeout(30000000)
+jest.setTimeout(30000000)
 describe('Create playlist service.', () => {
   beforeAll(async () => {
     mongoConnection.connection

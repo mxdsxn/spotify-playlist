@@ -12,7 +12,8 @@ describe('List playlists service.', () => {
   })
 
   beforeEach(async () => {
-    await PlaylistSchema.deleteMany({})
+    await PlaylistSchema.deleteMany()
+    await UserSchema.deleteMany()
   })
 
   afterAll(async () => {

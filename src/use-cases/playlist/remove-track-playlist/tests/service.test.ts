@@ -6,7 +6,7 @@ import removeTrackPlaylist from '../service'
 import updatePlaylist from '../../insert-track-playlist/service'
 import trackSpotifyMocked from './mocks/trackSpotify.json'
 
-// jest.setTimeout(30000000)
+jest.setTimeout(30000000)
 jest.mock('axios')
 
 describe('Remove a track in playlist service.', () => {

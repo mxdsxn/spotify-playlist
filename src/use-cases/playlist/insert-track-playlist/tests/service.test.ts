@@ -5,7 +5,7 @@ import { PlaylistSchemaType } from '@types'
 import updatePlaylist from '../service'
 import trackSpotifyMocked from './mocks/trackSpotify.json'
 
-// jest.setTimeout(30000000)
+jest.setTimeout(30000000)
 jest.mock('axios')
 
 describe('Insert track in playlist service.', () => {

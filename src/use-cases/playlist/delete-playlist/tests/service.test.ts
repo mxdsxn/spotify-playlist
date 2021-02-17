@@ -2,7 +2,7 @@ import mongoConnection from '../../../../database'
 import { PlaylistSchema } from '@schemas'
 import deletePlaylist from '../service'
 
-// jest.setTimeout(30000000)
+jest.setTimeout(30000000)
 describe('Delete playlist service.', () => {
   beforeAll(async () => {
     mongoConnection.connection
