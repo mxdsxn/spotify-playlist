@@ -31,7 +31,7 @@ const validationRoute = checkSchema({
 const updatePlaylistRoute = Router()
 updatePlaylistRoute.put('/:playlistId', validationRoute, validatorMiddleware, async (req: Request, res: Response, next: NextFunction) => {
   const {
-    description, name, isPrivate,
+    description, name, isPrivate, userId,
   } = req.body
 
   const { playlistId } = req.params
@@ -41,7 +41,7 @@ updatePlaylistRoute.put('/:playlistId', validationRoute, validatorMiddleware, as
   }
 
   try {
-    const result = await updatePlaylist(playlistOptions)
+    const result = await updatePlaylist(userId, playlistOptions)
 
     await responseHandler(res, result)
   } catch (error) {

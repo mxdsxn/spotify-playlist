@@ -132,8 +132,6 @@ describe('Show playlist service.', () => {
   })
 
   it('Show playlist error.', async () => {
-    jest.mock('@schemas')
-
     const userId = '123456'
     const playlistId = '123456'
     const result = await showPlaylist(userId, playlistId)
