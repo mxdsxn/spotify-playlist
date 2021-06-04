@@ -5,6 +5,7 @@ interface envInterface {
   DB_HOST?: string
   DB_NAME?: string
   DB_PORT?: string
+  MONGO_URL?: string
   NODE_ENV?: string
   SERVER_PORT?: string
   SPOTILIST_API_REDIRECT_URI?: string
