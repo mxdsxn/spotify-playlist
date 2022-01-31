@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { resultInterface } from '@interfaces'
+import { resultInterface } from "@interfaces"
 import { envs } from '@config'
 
 const { NODE_ENV } = envs
